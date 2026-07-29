@@ -1,7 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { createClient } from "@/lib/supabase/client";
+import type { User } from "@supabase/supabase-js";
 
 const links = [
   { href: "/blog", label: "Blog" },
@@ -13,6 +15,22 @@ const links = [
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
+  const supabase = createClient();
+
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data }) => setUser(data.user));
+
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => listener.subscription.unsubscribe();
+  }, [supabase]);
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+  };
 
   return (
     <header className="sticky top-0 z-50 bg-cream/90 backdrop-blur border-b border-black/5">
@@ -32,9 +50,20 @@ export function Navbar() {
         </ul>
 
         <div className="hidden md:flex items-center gap-4">
-          <Link href="/login" className="text-sm hover:text-primary">
-            Iniciar sesión
-          </Link>
+          {user ? (
+            <>
+              <span className="text-sm text-dark/70">
+                {user.user_metadata?.full_name ?? user.email}
+              </span>
+              <button onClick={handleLogout} className="text-sm hover:text-primary">
+                Cerrar sesión
+              </button>
+            </>
+          ) : (
+            <Link href="/login" className="text-sm hover:text-primary">
+              Iniciar sesión
+            </Link>
+          )}
           <Link
             href="/tienda"
             className="text-sm bg-primary text-white px-4 py-2 rounded-full hover:opacity-90 transition-opacity"
@@ -60,9 +89,13 @@ export function Navbar() {
             </li>
           ))}
           <li>
-            <Link href="/login" onClick={() => setOpen(false)}>
-              Iniciar sesión
-            </Link>
+            {user ? (
+              <button onClick={handleLogout}>Cerrar sesión</button>
+            ) : (
+              <Link href="/login" onClick={() => setOpen(false)}>
+                Iniciar sesión
+              </Link>
+            )}
           </li>
         </ul>
       )}
