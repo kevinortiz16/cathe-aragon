@@ -1,8 +1,32 @@
-import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const supabase = await createClient();
+
+  const { data: post } = await supabase
+    .from("posts")
+    .select("title, excerpt, cover_image")
+    .eq("slug", slug)
+    .single();
+
+  if (!post) return {};
+
+  return {
+    title: `${post.title} | Cathe Aragon`,
+    description: post.excerpt ?? undefined,
+    openGraph: {
+      title: post.title,
+      description: post.excerpt ?? undefined,
+      images: post.cover_image ? [post.cover_image] : undefined,
+    },
+  };
 }
 
 export default async function PostPage({ params }: PageProps) {

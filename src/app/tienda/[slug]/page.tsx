@@ -2,9 +2,33 @@ import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { formatPrice } from "@/lib/format";
 import { BuyButton } from "@/components/tienda/buy-button";
+import type { Metadata } from "next";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const supabase = await createClient();
+
+  const { data: product } = await supabase
+    .from("products")
+    .select("name, description, cover_image")
+    .eq("slug", slug)
+    .single();
+
+  if (!product) return {};
+
+  return {
+    title: `${product.name} | Tienda Cathe Aragon`,
+    description: product.description ?? undefined,
+    openGraph: {
+      title: product.name,
+      description: product.description ?? undefined,
+      images: product.cover_image ? [product.cover_image] : undefined,
+    },
+  };
 }
 
 export default async function ProductPage({ params }: PageProps) {
