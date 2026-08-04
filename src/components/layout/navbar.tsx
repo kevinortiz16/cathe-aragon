@@ -52,9 +52,9 @@ export function Navbar() {
         <div className="hidden md:flex items-center gap-4">
           {user ? (
             <>
-              <span className="text-sm text-dark/70">
-                {user.user_metadata?.full_name ?? user.email}
-              </span>
+              <Link href="/cuenta/compras" className="text-sm hover:text-primary">
+                Mis compras
+              </Link>
               <button onClick={handleLogout} className="text-sm hover:text-primary">
                 Cerrar sesión
               </button>
