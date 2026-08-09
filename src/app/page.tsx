@@ -46,6 +46,21 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* Planes de la semana - destacado */}
+      <section className="mx-auto max-w-6xl px-4 pb-16">
+        <Link
+          href="/planes"
+          className="block rounded-2xl bg-primary text-white p-8 text-center hover:opacity-90 transition-opacity"
+        >
+          <span className="text-sm font-medium uppercase tracking-wide opacity-80">
+            Nuevo cada semana
+          </span>
+          <h2 className="text-2xl font-semibold mt-2">
+            Los planes que mencioné en el último video →
+          </h2>
+        </Link>
+      </section>
+      
       {/* Últimos posts */}
       <section className="mx-auto max-w-6xl px-4 py-16">
         <div className="flex items-center justify-between mb-8">
