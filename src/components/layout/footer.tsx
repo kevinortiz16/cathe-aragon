@@ -33,6 +33,7 @@ export function Footer() {
             <li><Link href="/contacto">Contacto</Link></li>
             <li><Link href="/legal/privacidad">Privacidad</Link></li>
             <li><Link href="/legal/terminos">Términos</Link></li>
+            <li><Link href="/legal/cookies">Cookies</Link></li>
           </ul>
         </div>
 
