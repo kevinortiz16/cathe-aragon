@@ -1,9 +1,10 @@
 import Link from "next/link";
 
 const socials = [
-  { href: "https://instagram.com/cathearagon", label: "Instagram" },
-  { href: "https://tiktok.com/@cathearagon", label: "TikTok" },
-  { href: "https://youtube.com/@cathearagon", label: "YouTube" },
+  { href: "https://instagram.com/kevincathetravel", label: "Instagram" },
+  { href: "https://tiktok.com/@cathearagon.us", label: "TikTok" },
+  { href: "https://youtube.com/@kevincathetravel", label: "YouTube" },
+  { href: "https://www.facebook.com/people/Kevin-Cathe-Travel/61583092898224/", label: "Facebook" },
 ];
 
 export function Footer() {
