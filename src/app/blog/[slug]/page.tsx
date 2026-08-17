@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import ReactMarkdown from "react-markdown";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -67,8 +68,8 @@ export default async function PostPage({ params }: PageProps) {
         />
       )}
 
-      <div className="prose max-w-none">
-        <p>{post.content}</p>
+      <div className="prose max-w-none prose-headings:font-semibold prose-a:text-primary">
+        <ReactMarkdown>{post.content}</ReactMarkdown>
       </div>
     </article>
   );
