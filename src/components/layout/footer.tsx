@@ -9,7 +9,7 @@ const socials = [
 
 export function Footer() {
   return (
-    <footer className="bg-dark text-cream mt-20">
+    <footer className="bg-dark text-cream">
       <div className="mx-auto max-w-6xl px-4 py-12 grid grid-cols-1 md:grid-cols-4 gap-8">
         <div>
           <p className="font-semibold text-lg mb-2">Cathe Aragon</p>

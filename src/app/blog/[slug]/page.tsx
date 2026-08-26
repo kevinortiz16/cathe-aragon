@@ -46,31 +46,53 @@ export default async function PostPage({ params }: PageProps) {
   }
 
   return (
-    <article className="mx-auto max-w-3xl px-4 py-16">
+      <div className="bg-secondary/5">
+        <article className="mx-auto max-w-3xl px-4 py-16">
+          {/* todo el contenido existente del artículo se queda igual aquí adentro */}
       <span className="text-xs font-medium text-primary uppercase tracking-wide">
         {post.category}
       </span>
       <h1 className="text-4xl font-semibold mt-2 mb-4">{post.title}</h1>
-      <p className="text-dark/50 text-sm mb-8">
-        {new Date(post.created_at).toLocaleDateString("es-MX", {
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-        })}
-      </p>
+
+      <div className="flex items-center gap-3 mb-8">
+        <div className="w-9 h-9 rounded-full overflow-hidden shrink-0 bg-secondary/10">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/kevin_blog.png "
+            alt="Kevin Ortiz"
+            className="w-full h-full object-cover"
+          />
+        </div>
+        <div>
+          <p className="text-sm font-medium text-dark">Kevin Ortiz</p>
+          <p className="text-xs text-dark/50">
+            {new Date(post.created_at).toLocaleDateString("es-MX", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}
+          </p>
+        </div>
+      </div>
 
       {post.cover_image && (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={post.cover_image}
-          alt={post.title}
-          className="w-full rounded-2xl mb-8"
-        />
+        <div className="mb-8">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={post.cover_image}
+            alt={post.title}
+            className="w-full rounded-2xl"
+      />
+          <p className="text-xs text-dark/40 italic mt-2 text-align-right">
+            Fotografía by Ureflect
+          </p>
+        </div>
       )}
 
       <div className="prose max-w-none prose-headings:font-semibold prose-a:text-primary">
         <ReactMarkdown>{post.content}</ReactMarkdown>
       </div>
     </article>
+  </div>
   );
 }

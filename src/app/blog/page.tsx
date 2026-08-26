@@ -7,28 +7,43 @@ export const metadata = {
   description: "Guías de viaje, vida nómada, RV y camping.",
 };
 
-export default async function BlogPage() {
+interface PageProps {
+  searchParams: Promise<{ q?: string }>;
+}
+
+export default async function BlogPage({ searchParams }: PageProps) {
+  const { q } = await searchParams;
   const supabase = await createClient();
 
-  const { data: posts, error } = await supabase
+  let query = supabase
     .from("posts")
     .select("*")
     .eq("published", true)
     .order("created_at", { ascending: false });
+
+  if (q) {
+    query = query.or(`title.ilike.%${q}%,excerpt.ilike.%${q}%`);
+  }
+
+  const { data: posts, error } = await query;
 
   if (error) {
     console.error("Error fetching posts:", error);
   }
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-16">
+    <div className="mx-auto max-w-7xl px-4 py-16">
       <h1 className="text-4xl font-semibold mb-2">Blog</h1>
       <p className="text-dark/60 mb-12">
-        Guías de viaje, tips para nómadas, RV y camping por todo USA.
+        {q
+          ? `Resultados para "${q}"`
+          : "Guías de viaje, tips para nómadas, RV y camping por todo USA."}
       </p>
 
       {(!posts || posts.length === 0) && (
-        <p className="text-dark/50">Aún no hay posts publicados.</p>
+        <p className="text-dark/50">
+          {q ? "No se encontraron resultados." : "Aún no hay posts publicados."}
+        </p>
       )}
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
