@@ -9,6 +9,9 @@ export const metadata: Metadata = {
   title: "Cathe Aragon | Viajes, tips y recomendaciones",
   description:
     "Blog y tienda de Cathe Aragon: guías de viaje, vida nómada, RV, camping y colaboraciones con marcas.",
+  other: {
+    "google-adsense-account": "ca-pub-3914373007497165",
+  },
 };
 
 export default function RootLayout({
