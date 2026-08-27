@@ -25,37 +25,81 @@ export default async function HomePage() {
   return (
     <div>
       {/* Hero */}
-      <section className="mx-auto max-w-6xl px-4 py-24 text-center">
-        <span className="text-sm font-medium text-primary uppercase tracking-wide">
-          Viajes · Nómadas · RV · Camping
-        </span>
-        <h1 className="text-4xl md:text-6xl font-semibold mt-4 mb-6 max-w-3xl mx-auto leading-tight">
-          Tips reales para vivir viajando por USA
-        </h1>
-        <p className="text-dark/60 text-lg max-w-xl mx-auto mb-10">
-          Guías, plantillas y recomendaciones de una experta en marketing
-          que dejó la oficina por la carretera.
-        </p>
-        <div className="flex items-center justify-center gap-4">
-          <Button href="/blog" variant="primary">
-            Leer el blog
-          </Button>
-          <Button href="/tienda" variant="outline">
-            Ver tienda
-          </Button>
-        </div>
-      </section>
+      <section className="relative overflow-hidden">
+        {posts && posts.length > 0 && posts[0].cover_image ? (
+          <>
+            {/* Imagen de fondo */}
+            <div className="absolute inset-0">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={posts[0].cover_image}
+                alt={posts[0].title}
+                className="w-full h-full object-cover"
+              />
+              {/* Degradado oscuro para legibilidad del texto */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20" />
+            </div>
 
+            {/* Contenido sobre la imagen */}
+            <div className="relative mx-auto max-w-6xl px-4 py-32 md:py-44 text-center">
+              <span className="text-sm font-medium text-white/90 uppercase tracking-wide">
+                Viajes · Nómadas · RV · Camping
+              </span>
+              <h1 className="text-4xl md:text-6xl font-semibold mt-4 mb-6 max-w-3xl mx-auto leading-tight text-white">
+                {posts[0].title}
+              </h1>
+              {posts[0].excerpt && (
+                <p className="text-white/85 text-lg max-w-xl mx-auto mb-10">
+                  {posts[0].excerpt}
+                </p>
+              )}
+              <div className="flex items-center justify-center gap-4">
+                <Button href={`/blog/${posts[0].slug}`} variant="primary">
+                  Leer el último post
+                </Button>
+                <Button
+                  href="/tienda"
+                  className="bg-white/10 border border-white text-white hover:bg-white/20"
+                >
+                  Ver tienda
+                </Button>
+              </div>
+            </div>
+          </>
+        ) : (
+          <div className="mx-auto max-w-6xl px-4 py-24 text-center">
+            <span className="text-sm font-medium text-primary uppercase tracking-wide">
+              Viajes · Nómadas · RV · Camping
+            </span>
+            <h1 className="text-4xl md:text-6xl font-semibold mt-4 mb-6 max-w-3xl mx-auto leading-tight">
+              {posts && posts.length > 0 ? posts[0].title : "Tips reales para vivir viajando por USA"}
+            </h1>
+            <p className="text-dark/60 text-lg max-w-xl mx-auto mb-10">
+              Guías, plantillas y recomendaciones de una experta en marketing
+              que dejó la oficina por la carretera.
+            </p>
+            <div className="flex items-center justify-center gap-4">
+              <Button href="/blog" variant="primary">
+                Leer el blog
+              </Button>
+              <Button href="/tienda" variant="outline">
+                Ver tienda
+              </Button>
+            </div>
+          </div>
+        )}
+      </section>
+      
       {/* Planes de la semana - destacado */}
-      <section className="mx-auto max-w-6xl px-4 pb-16">
+      <section>
         <Link
           href="/planes"
-          className="block rounded-2xl bg-primary text-white p-8 text-center hover:opacity-90 transition-opacity"
+          className="block bg-secondary text-white py-10 px-4 text-center hover:opacity-90 transition-opacity"
         >
           <span className="text-sm font-medium uppercase tracking-wide opacity-80">
             Nuevo cada semana
           </span>
-          <h2 className="text-2xl font-semibold mt-2">
+          <h2 className="text-2xl md:text-3xl font-semibold mt-2">
             Los planes que mencioné en el último video →
           </h2>
         </Link>
