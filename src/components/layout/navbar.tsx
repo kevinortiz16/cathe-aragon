@@ -1,18 +1,21 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import { PlanesDropdown } from "./planes-dropdown";
+import { AccountDropdown } from "./account-dropdown";
 import type { User } from "@supabase/supabase-js";
 
 const links = [
-  { href: "/planes", label: "Planes" },
+  { href: "/", label: "Inicio" },
+  { href: "/planes", label: "Planes" }, // este ya lo reemplaza el PlanesDropdown
   { href: "/blog", label: "Blog" },
-  //{ href: "/tienda", label: "Tienda" },
-  { href: "/portafolio", label: "Portafolio" },
-  { href: "/sobre-mi", label: "Sobre mí" },
-  { href: "/contacto", label: "Contacto" },
+  { href: "/tienda", label: "Tienda" },
+  { href: "/guias", label: "Guías" },
+  { href: "/sobre-tatakoa", label: "Sobre TATAKOA" },
 ];
 
 export function Navbar() {
@@ -47,23 +50,40 @@ export function Navbar() {
   };
 
   const navLinkClass =
-    "text-sm text-white/90 hover:text-white hover:bg-black/15 rounded-full px-4 py-2 transition-colors";
+    "whitespace-nowrap leading-none text-xs font-semibold uppercase tracking-widest text-white/80 hover:text-tatakoa-terracotta px-4 py-2 transition-colors";
 
   return (
-    <header className="sticky top-0 z-50 bg-primary">
+    <header className="sticky top-0 z-50 bg-tatakoa-charcoal">
       <nav className="mx-auto max-w-7xl px-4 h-16 flex items-center justify-between gap-4">
-        <Link href="/" className="font-semibold text-lg tracking-tight text-white shrink-0">
-          Cathe Aragon
+        <Link href="/" className="flex items-center shrink-0">
+          <Image
+            src="/Logo_Negativo.svg"
+            alt="TATAKOA"
+            width={160}
+            height={21}
+            priority
+            className="h-6 w-auto"
+          />
         </Link>
 
         <ul className="hidden md:flex items-center gap-1">
-          {links.map((link) => (
-            <li key={link.href}>
-              <Link href={link.href} className={navLinkClass}>
-                {link.label}
-              </Link>
-            </li>
-          ))}
+          <li>
+            <Link href="/" className={navLinkClass}>
+              Inicio
+            </Link>
+          </li>
+          <li>
+            <PlanesDropdown navLinkClass={navLinkClass} />
+          </li>
+          {links
+            .filter((l) => l.href !== "/planes" && l.href !== "/")
+            .map((link) => (
+              <li key={link.href}>
+                <Link href={link.href} className={navLinkClass}>
+                  {link.label}
+                </Link>
+              </li>
+            ))}
         </ul>
 
         <div className="hidden md:flex items-center gap-2">
@@ -95,14 +115,7 @@ export function Navbar() {
           </div>
 
           {user ? (
-            <>
-              <Link href="/cuenta/compras" className={navLinkClass}>
-                Mis compras
-              </Link>
-              <button onClick={handleLogout} className={navLinkClass}>
-                Cerrar sesión
-              </button>
-            </>
+            <AccountDropdown navLinkClass={navLinkClass} onLogout={handleLogout} />
           ) : (
             <Link href="/login" className={navLinkClass}>
               Iniciar sesión
@@ -110,7 +123,7 @@ export function Navbar() {
           )}
           <Link
             href="/tienda"
-            className="text-sm bg-white text-primary px-4 py-2 rounded-full font-medium hover:bg-white/90 transition-colors"
+            className="text-sm bg-white text-tatakoa-charcoal px-4 py-2 rounded-full font-medium hover:bg-white/90 transition-colors"
           >
             Ver tienda
           </Link>

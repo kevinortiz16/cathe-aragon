@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 export const metadata = {
-  title: "Política de Privacidad | Cathe Aragon",
+  title: "Política de Privacidad | TATAKOA",
 };
 
 const DSAR_URL =
@@ -30,11 +30,11 @@ export default function PrivacidadPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-16">
       <h1 className="text-3xl font-semibold mb-2">Política de Privacidad</h1>
-      <p className="text-sm text-dark/50 mb-10">
+      <p className="text-sm text-tatakoa-charcoal/50 mb-10">
         Última actualización: 10 de agosto de 2026
       </p>
 
-      <div className="prose max-w-none prose-headings:font-semibold prose-a:text-primary text-dark/80 space-y-6">
+      <div className="prose max-w-none prose-headings:font-semibold prose-a:text-tatakoa-terracotta text-tatakoa-charcoal/80 space-y-6">
         <p>
           Este Aviso de Privacidad de <strong>Catherine Aragon Sierra</strong>{" "}
           (&quot;nosotros&quot;) describe cómo y por qué podemos acceder,
@@ -687,7 +687,7 @@ export default function PrivacidadPage() {
         </p>
       </div>
 
-      <p className="text-xs text-dark/40 mt-12 pt-6 border-t border-black/10">
+      <p className="text-xs text-tatakoa-charcoal/40 mt-12 pt-6 border-t border-black/10">
         © 2026 Catherine Aragon Sierra. Todos los derechos reservados.
       </p>
     </div>

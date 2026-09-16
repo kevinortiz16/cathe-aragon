@@ -48,7 +48,7 @@ export function ContactForm() {
     return (
       <div className="text-center py-16 border border-black/5 rounded-2xl">
         <p className="text-xl font-medium mb-2">¡Mensaje enviado!</p>
-        <p className="text-dark/60">
+        <p className="text-tatakoa-charcoal/60">
           Gracias por escribir. Te responderemos lo antes posible.
         </p>
       </div>

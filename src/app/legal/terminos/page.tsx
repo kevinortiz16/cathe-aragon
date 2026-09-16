@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Términos y Condiciones | Cathe Aragon",
+  title: "Términos y Condiciones | TATAKOA",
 };
 
 const CONTACT_EMAIL = "infocathearagon@gmail.com";
@@ -8,11 +8,11 @@ export default function TerminosPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-16">
       <h1 className="text-3xl font-semibold mb-2">Términos y Condiciones</h1>
-      <p className="text-sm text-dark/50 mb-10">
+      <p className="text-sm text-tatakoa-charcoal/50 mb-10">
         Última actualización: 13 de agosto de 2026
       </p>
 
-      <div className="prose max-w-none prose-headings:font-semibold prose-a:text-primary text-dark/80 space-y-6">
+      <div className="prose max-w-none prose-headings:font-semibold prose-a:text-tatakoa-terracotta text-tatakoa-charcoal/80 space-y-6">
         <h2>Acuerdo con nuestros términos legales</h2>
         <p>
           Somos <strong>Catherine Aragon Sierra</strong> (&quot;la
@@ -389,7 +389,7 @@ export default function TerminosPage() {
         </p>
       </div>
 
-      <p className="text-xs text-dark/40 mt-12 pt-6 border-t border-black/5">
+      <p className="text-xs text-tatakoa-charcoal/40 mt-12 pt-6 border-t border-black/5">
         Estos Términos y Condiciones fueron elaborados con base en la
         plantilla del{" "}
         

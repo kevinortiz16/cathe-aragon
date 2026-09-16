@@ -1,6 +1,7 @@
-import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
-import { Plan } from "@/types/plan";
+import { PlanCard } from "@/components/plans/plan-card";
+import { getCityLabel } from "@/lib/cities";
+import type { Plan } from "@/types/plan";
 import type { Metadata } from "next";
 
 interface PageProps {
@@ -9,49 +10,44 @@ interface PageProps {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { city } = await params;
-  const cityName = decodeURIComponent(city);
+  const cityName = getCityLabel(city);
   return {
-    title: `Mejores planes en ${cityName} | Cathe Aragon`,
+    title: `Mejores planes en ${cityName} | TATAKOA`,
     description: `Guía de planes recomendados en ${cityName}.`,
   };
 }
 
 export default async function CityPlansPage({ params }: PageProps) {
   const { city } = await params;
-  const cityName = decodeURIComponent(city);
+  const cityName = getCityLabel(city);
   const supabase = await createClient();
+  const today = new Date().toISOString().split("T")[0];
 
   const { data: plans } = await supabase
     .from("plans")
     .select("*")
     .eq("published", true)
-    .ilike("city", cityName)
+    .eq("city", city)
+    .gte("valid_until", today)
     .order("featured", { ascending: false })
     .order("created_at", { ascending: false });
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-16">
-      <h1 className="text-4xl font-semibold mb-2 capitalize">
+    <div className="mx-auto max-w-6xl px-4 py-16">
+      <h1 className="text-4xl font-semibold mb-2">
         Mejores planes en {cityName}
       </h1>
-      <p className="text-dark/60 mb-12">
-        Recomendaciones que he compartido a lo largo del tiempo en {cityName}.
+      <p className="text-tatakoa-charcoal/60 mb-12">
+        Planes vigentes esta semana en {cityName}.
       </p>
 
       {(!plans || plans.length === 0) && (
-        <p className="text-dark/50">Próximamente, planes para esta ciudad.</p>
+        <p className="text-tatakoa-charcoal/50">Próximamente, planes para esta ciudad.</p>
       )}
 
-      <div className="space-y-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {plans?.map((plan: Plan) => (
-          <Link
-            key={plan.id}
-            href={`/planes/${city}/${plan.slug}`}
-            className="block rounded-2xl border border-black/5 p-6 hover:shadow-lg transition-shadow"
-          >
-            <h2 className="text-xl font-semibold">{plan.title}</h2>
-            <p className="text-dark/60 mt-2">{plan.description}</p>
-          </Link>
+          <PlanCard key={plan.id} plan={plan} showCity={false} />
         ))}
       </div>
     </div>

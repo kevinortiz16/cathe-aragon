@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!product) return {};
 
   return {
-    title: `${product.name} | Tienda Cathe Aragon`,
+    title: `${product.name} | Tienda TATAKOA`,
     description: product.description ?? undefined,
     openGraph: {
       title: product.name,
@@ -48,7 +48,7 @@ export default async function ProductPage({ params }: PageProps) {
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-16">
-      <div className="aspect-video bg-secondary/10 rounded-2xl flex items-center justify-center text-secondary/40 mb-8">
+      <div className="aspect-video bg-tatakoa-sand/10 rounded-2xl flex items-center justify-center text-tatakoa-sand/40 mb-8">
         {product.cover_image ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
@@ -62,10 +62,10 @@ export default async function ProductPage({ params }: PageProps) {
       </div>
 
       <h1 className="text-3xl font-semibold mb-2">{product.name}</h1>
-      <p className="text-dark/60 mb-6">{product.description}</p>
+      <p className="text-tatakoa-charcoal/60 mb-6">{product.description}</p>
 
       <div className="flex items-center justify-between border-t border-black/5 pt-6">
-        <span className="text-2xl font-semibold text-primary">
+        <span className="text-2xl font-semibold text-tatakoa-terracotta">
           {formatPrice(product.price_cents, product.currency)}
         </span>
         <BuyButton productId={product.id} />

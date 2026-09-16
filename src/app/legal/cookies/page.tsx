@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Política de Cookies | Cathe Aragon",
+  title: "Política de Cookies | TATAKOA",
 };
 
 const CONTACT_EMAIL = "infocathearagon@gmail.com";
@@ -8,11 +8,11 @@ export default function CookiesPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-16">
       <h1 className="text-3xl font-semibold mb-2">Política de Cookies</h1>
-      <p className="text-sm text-dark/50 mb-10">
+      <p className="text-sm text-tatakoa-charcoal/50 mb-10">
         Última actualización: 13 de agosto de 2026
       </p>
 
-      <div className="prose max-w-none prose-headings:font-semibold prose-a:text-primary text-dark/80 space-y-6">
+      <div className="prose max-w-none prose-headings:font-semibold prose-a:text-tatakoa-terracotta text-tatakoa-charcoal/80 space-y-6">
         <p>
           Esta Política de Cookies explica qué son las cookies, cómo las
           usamos en <strong>cathearagon.com</strong>, los tipos de cookies

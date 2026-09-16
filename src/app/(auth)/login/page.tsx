@@ -18,7 +18,7 @@ export default function LoginPage() {
   return (
     <div className="mx-auto max-w-sm px-4 py-24 text-center">
       <h1 className="text-2xl font-semibold mb-2">Bienvenido de vuelta</h1>
-      <p className="text-dark/60 mb-8 text-sm">
+      <p className="text-tatakoa-charcoal/60 mb-8 text-sm">
         Inicia sesión para acceder a tu contenido y compras.
       </p>
       <Button onClick={handleGoogleLogin} className="w-full">

@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { getCityLabel } from "@/lib/cities";
 import ReactMarkdown from "react-markdown";
 
 interface PageProps {
@@ -26,7 +27,7 @@ export default async function PlanDetailPage({ params }: PageProps) {
   return (
     <article className="mx-auto max-w-4xl px-4 py-16">
       {/* Imagen destacada */}
-      <div className="aspect-video bg-secondary/10 rounded-2xl overflow-hidden mb-8 flex items-center justify-center text-secondary/40">
+      <div className="aspect-video bg-tatakoa-sand/10 rounded-2xl overflow-hidden mb-8 flex items-center justify-center text-tatakoa-sand/40">
         {plan.cover_image ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
@@ -39,15 +40,15 @@ export default async function PlanDetailPage({ params }: PageProps) {
         )}
       </div>
 
-      <span className="text-xs font-medium text-primary uppercase tracking-wide">
-        {plan.city}
+      <span className="text-xs font-medium text-tatakoa-terracotta uppercase tracking-wide">
+        {getCityLabel(plan.city)}
       </span>
       <h1 className="text-3xl font-semibold mt-2 mb-8">{plan.title}</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
         {/* Descripción */}
         <div className="md:col-span-2">
-          <div className="prose max-w-none prose-headings:font-semibold prose-a:text-primary">
+          <div className="prose max-w-none prose-headings:font-semibold prose-a:text-tatakoa-terracotta">
             <ReactMarkdown>{plan.content}</ReactMarkdown>
           </div>
 
@@ -57,11 +58,11 @@ export default async function PlanDetailPage({ params }: PageProps) {
               <a  href={plan.affiliate_link}
                 target="_blank"
                 rel="noopener noreferrer sponsored"
-                className="inline-block bg-primary text-white px-6 py-3 rounded-full font-medium hover:opacity-90 transition-opacity"
+                className="inline-block bg-tatakoa-terracotta text-white px-6 py-3 rounded-full font-medium hover:opacity-90 transition-opacity"
               >
                 Reservar / Ver más →
               </a>
-              <p className="text-xs text-dark/40 mt-3">
+              <p className="text-xs text-tatakoa-charcoal/40 mt-3">
                 Este enlace es de afiliado — si reservas a través de él, puedo
                 ganar una comisión sin costo extra para ti.
               </p>
@@ -94,7 +95,7 @@ export default async function PlanDetailPage({ params }: PageProps) {
                 <a href={`https://www.google.com/maps/dir/?api=1&destination=${plan.latitude},${plan.longitude}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm text-primary font-medium hover:underline"
+                  className="text-sm text-tatakoa-terracotta font-medium hover:underline"
                 >
                   Cómo llegar →
                 </a>

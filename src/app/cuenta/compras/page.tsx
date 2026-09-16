@@ -5,7 +5,7 @@ import { formatPrice } from "@/lib/format";
 import { DownloadButton } from "@/components/tienda/download-button";
 
 export const metadata = {
-  title: "Mis compras | Cathe Aragon",
+  title: "Mis compras | TATAKOA",
 };
 
 export default async function ComprasPage() {
@@ -30,14 +30,14 @@ export default async function ComprasPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-16">
       <h1 className="text-3xl font-semibold mb-2">Mis compras</h1>
-      <p className="text-dark/60 mb-10">
+      <p className="text-tatakoa-charcoal/60 mb-10">
         Aquí puedes descargar las plantillas y guías que has comprado.
       </p>
 
       {(!orders || orders.length === 0) && (
         <div className="text-center py-16 border border-black/5 rounded-2xl">
-          <p className="text-dark/50 mb-4">Todavía no tienes compras.</p>
-          <Link href="/tienda" className="text-primary font-medium hover:underline">
+          <p className="text-tatakoa-charcoal/50 mb-4">Todavía no tienes compras.</p>
+          <Link href="/tienda" className="text-tatakoa-terracotta font-medium hover:underline">
             Ver tienda
           </Link>
         </div>
@@ -55,7 +55,7 @@ export default async function ComprasPage() {
             >
               <div>
                 <p className="font-medium">{product.name}</p>
-                <p className="text-sm text-dark/50">
+                <p className="text-sm text-tatakoa-charcoal/50">
                   {product.file_format} · Comprado el{" "}
                   {new Date(order.created_at).toLocaleDateString("es-MX", {
                     year: "numeric",

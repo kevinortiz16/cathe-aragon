@@ -4,9 +4,9 @@ import { ButtonHTMLAttributes } from "react";
 type Variant = "primary" | "secondary" | "outline";
 
 const variants: Record<Variant, string> = {
-  primary: "bg-primary text-white hover:opacity-90",
-  secondary: "bg-secondary text-white hover:opacity-90",
-  outline: "border border-dark/20 hover:bg-dark/5",
+  primary: "bg-tatakoa-terracotta text-white hover:opacity-90",
+  secondary: "bg-tatakoa-sand text-white hover:opacity-90",
+  outline: "border border-tatakoa-charcoal/20 hover:bg-tatakoa-charcoal/5",
 };
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {

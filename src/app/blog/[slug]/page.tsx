@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!post) return {};
 
   return {
-    title: `${post.title} | Cathe Aragon`,
+    title: `${post.title} | TATAKOA`,
     description: post.excerpt ?? undefined,
     openGraph: {
       title: post.title,
@@ -46,16 +46,16 @@ export default async function PostPage({ params }: PageProps) {
   }
 
   return (
-      <div className="bg-secondary/5">
+      <div className="bg-tatakoa-sand/5">
         <article className="mx-auto max-w-3xl px-4 py-16">
           {/* todo el contenido existente del artículo se queda igual aquí adentro */}
-      <span className="text-xs font-medium text-primary uppercase tracking-wide">
+      <span className="text-xs font-medium text-tatakoa-terracotta uppercase tracking-wide">
         {post.category}
       </span>
       <h1 className="text-4xl font-semibold mt-2 mb-4">{post.title}</h1>
 
       <div className="flex items-center gap-3 mb-8">
-        <div className="w-9 h-9 rounded-full overflow-hidden shrink-0 bg-secondary/10">
+        <div className="w-9 h-9 rounded-full overflow-hidden shrink-0 bg-tatakoa-sand/10">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/kevin_blog.png "
@@ -64,8 +64,8 @@ export default async function PostPage({ params }: PageProps) {
           />
         </div>
         <div>
-          <p className="text-sm font-medium text-dark">Kevin Ortiz</p>
-          <p className="text-xs text-dark/50">
+          <p className="text-sm font-medium text-tatakoa-charcoal">Kevin Ortiz</p>
+          <p className="text-xs text-tatakoa-charcoal/50">
             {new Date(post.created_at).toLocaleDateString("es-MX", {
               year: "numeric",
               month: "long",
@@ -83,13 +83,13 @@ export default async function PostPage({ params }: PageProps) {
             alt={post.title}
             className="w-full rounded-2xl"
       />
-          <p className="text-xs text-dark/40 italic mt-2 text-align-right">
+          <p className="text-xs text-tatakoa-charcoal/40 italic mt-2 text-align-right">
             Fotografía by Ureflect
           </p>
         </div>
       )}
 
-      <div className="prose max-w-none prose-headings:font-semibold prose-a:text-primary">
+      <div className="prose max-w-none prose-headings:font-semibold prose-a:text-tatakoa-terracotta">
         <ReactMarkdown>{post.content}</ReactMarkdown>
       </div>
     </article>

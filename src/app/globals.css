@@ -1,16 +1,18 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
-:root {
-  --color-brand-primary: #D85A30;
-  --color-brand-secondary: #0F6E56;
-  --color-brand-dark: #2C2C2A;
-  --color-brand-cream: #FAF6F0;
-}
 
 @theme inline {
-  --color-primary: var(--color-brand-primary);
-  --color-secondary: var(--color-brand-secondary);
-  --color-dark: var(--color-brand-dark);
-  --color-cream: var(--color-brand-cream);
+  --color-tatakoa-terracotta: #C65A2E;
+  --color-tatakoa-sand: #D2B48C;
+  --color-tatakoa-slate: #4F6478;
+  --color-tatakoa-white: #F4F0E8;
+  --color-tatakoa-charcoal: #1F1C1A;
+
+  --font-sans: var(--font-montserrat), sans-serif;
+}
+
+body {
+  background: var(--color-tatakoa-white);
+  color: var(--color-tatakoa-charcoal);
 }
