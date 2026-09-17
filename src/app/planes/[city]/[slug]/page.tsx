@@ -1,57 +1,106 @@
-import { MetadataRoute } from "next";
+import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { SUB_BRANDS } from "@/lib/sub-brands";
+import ReactMarkdown from "react-markdown";
+import { getCityLabel } from "@/lib/cities";
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+interface PageProps {
+  params: Promise<{ city: string; slug: string }>;
+}
+
+export default async function PlanDetailPage({ params }: PageProps) {
+  const { slug } = await params;
   const supabase = await createClient();
-  const baseUrl = "https://tatakoa.co";
-  const today = new Date().toISOString().split("T")[0];
 
-  const { data: posts } = await supabase
-    .from("posts")
-    .select("slug, created_at")
-    .eq("published", true);
-
-  const { data: products } = await supabase
-    .from("products")
-    .select("slug, created_at")
-    .eq("active", true);
-
-  const { data: plans } = await supabase
+  const { data: plan } = await supabase
     .from("plans")
-    .select("city, slug, created_at")
+    .select("*")
+    .eq("slug", slug)
     .eq("published", true)
-    .gte("valid_until", today);
+    .single();
 
-  const staticRoutes = [
-    { url: baseUrl, lastModified: new Date() },
-    { url: `${baseUrl}/planes`, lastModified: new Date() },
-    { url: `${baseUrl}/blog`, lastModified: new Date() },
-    { url: `${baseUrl}/tienda`, lastModified: new Date() },
-    { url: `${baseUrl}/sobre-tatakoa`, lastModified: new Date() },
-    { url: `${baseUrl}/portafolio`, lastModified: new Date() },
-    { url: `${baseUrl}/contacto`, lastModified: new Date() },
-  ];
+  if (!plan) {
+    notFound();
+  }
 
-  const brandRoutes = SUB_BRANDS.map((brand) => ({
-    url: `${baseUrl}/marcas/${brand.slug}`,
-    lastModified: new Date(),
-  }));
+  const hasLocation = plan.latitude && plan.longitude;
 
-  const postRoutes = (posts ?? []).map((post) => ({
-    url: `${baseUrl}/blog/${post.slug}`,
-    lastModified: new Date(post.created_at),
-  }));
+  return (
+    <article className="mx-auto max-w-4xl px-4 py-16">
+      <div className="aspect-video bg-tatakoa-sand/10 rounded-2xl overflow-hidden mb-8 flex items-center justify-center text-tatakoa-sand/40">
+        {plan.cover_image ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={plan.cover_image}
+            alt={plan.title}
+            className="w-full h-full object-cover"
+          />
+        ) : (
+          "Sin imagen"
+        )}
+      </div>
 
-  const productRoutes = (products ?? []).map((product) => ({
-    url: `${baseUrl}/tienda/${product.slug}`,
-    lastModified: new Date(product.created_at),
-  }));
+      <span className="text-xs font-medium text-tatakoa-terracotta uppercase tracking-wide">
+        {getCityLabel(plan.city)}
+      </span>
+      <h1 className="text-3xl font-semibold mt-2 mb-8">{plan.title}</h1>
 
-  const planRoutes = (plans ?? []).map((plan) => ({
-    url: `${baseUrl}/planes/${plan.city}/${plan.slug}`,
-    lastModified: new Date(plan.created_at),
-  }));
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+        <div className="md:col-span-2">
+          <div className="prose max-w-none prose-headings:font-semibold prose-a:text-tatakoa-terracotta">
+            <ReactMarkdown>{plan.content}</ReactMarkdown>
+          </div>
 
-  return [...staticRoutes, ...brandRoutes, ...postRoutes, ...productRoutes, ...planRoutes];
+          {plan.affiliate_link && (
+            <div className="mt-8">
+              
+              <a  href={plan.affiliate_link}
+                target="_blank"
+                rel="noopener noreferrer sponsored"
+                className="inline-block bg-tatakoa-terracotta text-white px-6 py-3 rounded-full font-medium hover:opacity-90 transition-opacity"
+              >
+                Reservar / Ver más →
+              </a>
+              <p className="text-xs text-tatakoa-charcoal/40 mt-3">
+                Este enlace es de afiliado — si reservas a través de él, puedo
+                ganar una comisión sin costo extra para ti.
+              </p>
+            </div>
+          )}
+        </div>
+
+        {hasLocation && (
+          <div className="md:col-span-1">
+            <div className="rounded-2xl border border-black/5 overflow-hidden sticky top-24">
+              
+              <a href={`https://www.google.com/maps/dir/?api=1&destination=${plan.latitude},${plan.longitude}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block"
+              >
+                <iframe
+                  title={`Mapa de ${plan.location_name ?? plan.title}`}
+                  src={`https://www.google.com/maps?q=${plan.latitude},${plan.longitude}&output=embed`}
+                  className="w-full aspect-square pointer-events-none"
+                  loading="lazy"
+                />
+              </a>
+              <div className="p-4">
+                {plan.location_name && (
+                  <p className="font-medium text-sm mb-1">{plan.location_name}</p>
+                )}
+                <a
+                  href={`https://www.google.com/maps/dir/?api=1&destination=${plan.latitude},${plan.longitude}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-tatakoa-terracotta font-medium hover:underline"
+                >
+                  Cómo llegar →
+                </a>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </article>
+  );
 }
