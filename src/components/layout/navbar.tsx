@@ -8,13 +8,12 @@ import { createClient } from "@/lib/supabase/client";
 import { PlanesDropdown } from "./planes-dropdown";
 import { AccountDropdown } from "./account-dropdown";
 import type { User } from "@supabase/supabase-js";
+import { TiendaDropdown } from "./tienda-dropdown";
 
 const links = [
   { href: "/", label: "Inicio" },
-  { href: "/planes", label: "Planes" }, // este ya lo reemplaza el PlanesDropdown
+  { href: "/planes", label: "Planes" },
   { href: "/blog", label: "Blog" },
-  { href: "/tienda", label: "Tienda" },
-  { href: "/guias", label: "Guías" },
   { href: "/sobre-tatakoa", label: "Sobre TATAKOA" },
 ];
 
@@ -74,6 +73,9 @@ export function Navbar() {
           </li>
           <li>
             <PlanesDropdown navLinkClass={navLinkClass} />
+          </li>
+          <li>
+            <TiendaDropdown navLinkClass={navLinkClass} />
           </li>
           {links
             .filter((l) => l.href !== "/planes" && l.href !== "/")

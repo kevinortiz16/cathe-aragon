@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: ["/cuenta/", "/api/"],
     },
-    sitemap: "https://cathearagon.com/sitemap.xml",
+    sitemap: "https://tatakoa.co/sitemap.xml",
   };
 }

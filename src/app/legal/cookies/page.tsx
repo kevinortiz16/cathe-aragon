@@ -15,7 +15,7 @@ export default function CookiesPage() {
       <div className="prose max-w-none prose-headings:font-semibold prose-a:text-tatakoa-terracotta text-tatakoa-charcoal/80 space-y-6">
         <p>
           Esta Política de Cookies explica qué son las cookies, cómo las
-          usamos en <strong>cathearagon.com</strong>, los tipos de cookies
+          usamos en <strong>tatakoa.co</strong>, los tipos de cookies
           que utilizamos, la información que recolectamos mediante
           cookies, y cómo puedes controlar tus preferencias.
         </p>

@@ -76,9 +76,7 @@ export default async function HomePage() {
           <h1 className="text-4xl md:text-6xl font-semibold mt-4 mb-5 text-white leading-tight">
             Donde Cada Viaje Comienza
           </h1>
-          <p className="text-white/85 text-base md:text-lg max-w-xl mx-auto mb-8">
-            Guías, contenido y planes para quienes viven viajando — y muy pronto,
-            productos hechos para el camino.
+         <p className="text-white/85 text-base md:text-lg max-w-xl mx-auto mb-8">
           </p>
           <div className="flex items-center justify-center gap-4">
             <Button href="/sobre-tatakoa" variant="primary">

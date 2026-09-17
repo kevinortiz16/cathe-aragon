@@ -8,6 +8,7 @@ export interface Product {
   cover_image: string | null;
   file_path: string | null;
   file_format: string | null;
+  product_type: "digital" | "physical";
   active: boolean;
   created_at: string;
 }

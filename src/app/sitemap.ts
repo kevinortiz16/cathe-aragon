@@ -3,7 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const supabase = await createClient();
-  const baseUrl = "https://cathearagon.com";
+  const baseUrl = "https://tatakoa.co";
 
   const { data: posts } = await supabase
     .from("posts")
@@ -21,6 +21,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${baseUrl}/tienda`, lastModified: new Date() },
     { url: `${baseUrl}/portafolio`, lastModified: new Date() },
     { url: `${baseUrl}/contacto`, lastModified: new Date() },
+    { url: `${baseUrl}/tienda/plantillas`, lastModified: new Date() },
+    { url: `${baseUrl}/tienda/productos`, lastModified: new Date() },
   ];
 
   const postRoutes = (posts ?? []).map((post) => ({

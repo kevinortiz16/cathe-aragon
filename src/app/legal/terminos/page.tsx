@@ -17,7 +17,7 @@ export default function TerminosPage() {
         <p>
           Somos <strong>Catherine Aragon Sierra</strong> (&quot;la
           Empresa&quot;, &quot;nosotros&quot;). Operamos el sitio web{" "}
-          <strong>cathearagon.com</strong>, así como cualquier otro producto
+          <strong>tatakoa.co</strong>, así como cualquier otro producto
           o servicio relacionado que haga referencia a estos Términos
           Legales (colectivamente, los &quot;Servicios&quot;).
         </p>

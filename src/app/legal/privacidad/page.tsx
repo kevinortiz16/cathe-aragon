@@ -42,8 +42,8 @@ export default function PrivacidadPage() {
           información personal cuando usas nuestros servicios
           (&quot;Servicios&quot;), incluyendo cuando visitas nuestro sitio web
           en{" "}
-          <a href="https://www.cathearagon.com" target="_blank" rel="noopener noreferrer">
-            https://www.cathearagon.com
+          <a href="https://www.tatakoa.co" target="_blank" rel="noopener noreferrer">
+            https://www.tatakoa.co
           </a>
           , o interactúas con nosotros de otras formas relacionadas,
           incluyendo cualquier actividad de marketing o eventos.
