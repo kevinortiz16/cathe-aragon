@@ -13,7 +13,7 @@ export default async function ComprasPage() {
 
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) {
-    redirect("/login");
+    redirect("/login?next=/cuenta/compras");
   }
 
   const { data: orders, error } = await supabase

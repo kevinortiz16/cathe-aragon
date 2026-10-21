@@ -11,4 +11,7 @@ export interface Product {
   product_type: "digital" | "physical";
   active: boolean;
   created_at: string;
+  // Columnas opcionales (ver supabase/migrations/20261021_mejoras.sql)
+  long_description?: string | null;
+  preview_images?: string[] | null;
 }

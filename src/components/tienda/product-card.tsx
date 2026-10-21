@@ -1,4 +1,3 @@
-
 import Link from "next/link";
 import { formatPrice } from "@/lib/format";
 import type { Product } from "@/types/product";
@@ -29,7 +28,7 @@ export function ProductCard({ product }: { product: Product }) {
           {product.description}
         </p>
         <p className="text-tatakoa-terracotta font-semibold mt-3">
-          {formatPrice(product.price_cents, product.currency)}
+          {product.price_cents === 0 ? "Gratis" : formatPrice(product.price_cents, product.currency)}
         </p>
       </div>
     </Link>

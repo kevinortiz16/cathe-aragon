@@ -3,7 +3,10 @@ import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 
 export async function POST(request: Request) {
-  const { productId } = await request.json();
+  const { productId } = await request.json().catch(() => ({}));
+  if (typeof productId !== "string" || !productId) {
+    return NextResponse.json({ error: "Producto inválido" }, { status: 400 });
+  }
   const supabase = await createClient();
 
   const { data: { user } } = await supabase.auth.getUser();
@@ -18,7 +21,7 @@ export async function POST(request: Request) {
     .eq("product_id", productId)
     .eq("status", "completed")
     .limit(1)
-    .single();
+    .maybeSingle();
 
   if (!order) {
     return NextResponse.json(
@@ -40,7 +43,7 @@ export async function POST(request: Request) {
   const admin = createAdminClient();
   const { data: signedUrl, error } = await admin.storage
     .from("products")
-    .createSignedUrl(product.file_path, 300);
+    .createSignedUrl(product.file_path, 300, { download: true });
 
   if (error || !signedUrl) {
     console.error("Error creating signed URL:", error);

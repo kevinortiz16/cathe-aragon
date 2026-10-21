@@ -1,11 +1,15 @@
 import { NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe/server";
-import { createAdminClient } from "@/lib/supabase/admin";
+import { fulfillCheckoutSession } from "@/lib/orders/fulfill";
 import Stripe from "stripe";
 
 export async function POST(request: Request) {
   const body = await request.text();
-  const signature = request.headers.get("stripe-signature")!;
+  const signature = request.headers.get("stripe-signature");
+
+  if (!signature) {
+    return NextResponse.json({ error: "Missing signature" }, { status: 400 });
+  }
 
   let event: Stripe.Event;
 
@@ -20,17 +24,16 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
   }
 
-  if (event.type === "checkout.session.completed") {
+  if (
+    event.type === "checkout.session.completed" ||
+    event.type === "checkout.session.async_payment_succeeded"
+  ) {
     const session = event.data.object as Stripe.Checkout.Session;
-    const admin = createAdminClient();
+    const result = await fulfillCheckoutSession(session);
 
-    const { error } = await admin
-      .from("orders")
-      .update({ status: "completed" })
-      .eq("stripe_session_id", session.id);
-
-    if (error) {
-      console.error("Error updating order:", error);
+    // Si falla la base de datos, respondemos 500 para que Stripe reintente.
+    if (!result.ok && result.reason === "db_error") {
+      return NextResponse.json({ error: "Fulfillment failed" }, { status: 500 });
     }
   }
 
