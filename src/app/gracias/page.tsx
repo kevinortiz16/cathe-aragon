@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { stripe } from "@/lib/stripe/server";
+import { getStripe } from "@/lib/stripe/server";
 import { createClient } from "@/lib/supabase/server";
 import { fulfillCheckoutSession } from "@/lib/orders/fulfill";
 import { DownloadButton } from "@/components/tienda/download-button";
@@ -16,7 +16,7 @@ interface PageProps {
 
 async function loadSession(sessionId: string) {
   try {
-    return await stripe.checkout.sessions.retrieve(sessionId);
+    return await getStripe().checkout.sessions.retrieve(sessionId);
   } catch {
     return null;
   }
