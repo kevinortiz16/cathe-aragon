@@ -6,11 +6,17 @@ import { GoogleAnalytics } from "@/components/analytics/google-analytics";
 import { AdSense } from "@/components/analytics/adsense";
 import "./globals.css";
 
-import { Montserrat } from "next/font/google";
+import localFont from "next/font/local";
 
-const montserrat = Montserrat({
-  subsets: ["latin"],
+// Montserrat servida desde el propio sitio (sin depender de Google Fonts).
+// Archivos variables (peso 100–900) recortados a caracteres latinos.
+const montserrat = localFont({
+  src: [
+    { path: "./fonts/Montserrat-Variable.woff2", weight: "100 900", style: "normal" },
+    { path: "./fonts/Montserrat-Italic-Variable.woff2", weight: "100 900", style: "italic" },
+  ],
   variable: "--font-montserrat",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
