@@ -56,7 +56,7 @@ export function Footer() {
         <div>
           <div className="relative h-10 mb-0.5 flex items-center gap-2.5">
             <Image src="/logo/isotipo_slate.svg" alt="" width={24} height={24} className="opacity-90" />
-            <p className="text-xs font-semibold uppercase tracking-widest text-tatakoa-slate">Sígueme</p>
+            <p className="text-xs font-semibold uppercase tracking-widest text-tatakoa-slate">Síguenos</p>
           </div>
           <ul className="space-y-2 text-sm text-tatakoa-white/70 pl-[34px]">
             {socials.map((s) => (

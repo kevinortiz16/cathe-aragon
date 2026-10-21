@@ -1,7 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import ReactMarkdown from "react-markdown";
+import { Markdown } from "@/components/ui/markdown";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -15,12 +15,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     .from("posts")
     .select("title, excerpt, cover_image")
     .eq("slug", slug)
+    .eq("published", true)
     .single();
 
   if (!post) return {};
 
   return {
     title: `${post.title} | TATAKOA`,
+    alternates: { canonical: `/blog/${slug}` },
     description: post.excerpt ?? undefined,
     openGraph: {
       title: post.title,
@@ -58,7 +60,7 @@ export default async function PostPage({ params }: PageProps) {
         <div className="w-9 h-9 rounded-full overflow-hidden shrink-0 bg-tatakoa-sand/10">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/kevin_blog.png "
+            src="/kevin_blog.png"
             alt="Kevin Ortiz"
             className="w-full h-full object-cover"
           />
@@ -83,14 +85,14 @@ export default async function PostPage({ params }: PageProps) {
             alt={post.title}
             className="w-full rounded-2xl"
       />
-          <p className="text-xs text-tatakoa-charcoal/40 italic mt-2 text-align-right">
-            Fotografía by Ureflect
+          <p className="text-xs text-tatakoa-charcoal/40 italic mt-2 text-right">
+            Fotografía: Ureflect
           </p>
         </div>
       )}
 
       <div className="prose max-w-none prose-headings:font-semibold prose-a:text-tatakoa-terracotta">
-        <ReactMarkdown>{post.content}</ReactMarkdown>
+        <Markdown>{post.content}</Markdown>
       </div>
     </article>
   </div>

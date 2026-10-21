@@ -2,12 +2,13 @@ import Link from "next/link";
 import Image from "next/image";
 import { createClient } from "@/lib/supabase/server";
 import { Button } from "@/components/ui/button";
-import { formatPrice } from "@/lib/format";
+import { ProductCard } from "@/components/tienda/product-card";
+import { SubscribeForm } from "@/components/forms/subscribe-form";
 import { SUB_BRANDS } from "@/lib/sub-brands";
 import type { Post } from "@/types/post";
 import type { Product } from "@/types/product";
 
-// Placeholder estático hasta confirmar tabla real de ciudades en Supabase
+// Ciudades destacadas (las mismas de /planes, ver src/lib/cities.ts)
 const FEATURED_CITIES = [
   {
     name: "Washington D.C.",
@@ -43,6 +44,7 @@ export default async function HomePage() {
     .from("products")
     .select("*")
     .eq("active", true)
+    .eq("product_type", "digital")
     .order("created_at", { ascending: false })
     .limit(3);
 
@@ -76,17 +78,19 @@ export default async function HomePage() {
           <h1 className="text-4xl md:text-6xl font-semibold mt-4 mb-5 text-white leading-tight">
             Donde Cada Viaje Comienza
           </h1>
-         <p className="text-white/85 text-base md:text-lg max-w-xl mx-auto mb-8">
+          <p className="text-white/85 text-base md:text-lg max-w-xl mx-auto mb-8">
+            Planes de la semana, guías y plantillas para viajar por USA con orden y sin estrés.
           </p>
-          <div className="flex items-center justify-center gap-4">
-            <Button href="/sobre-tatakoa" variant="primary">
-              Conoce TATAKOA
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
+            <Button href="/planes" variant="primary">
+              Ver planes de la semana
             </Button>
             <Button
-              href="/blog"
-              className="bg-white/10 border border-white text-white hover:bg-white/20"
+              href="/tienda/plantillas"
+              variant="outline"
+              className="bg-white/10 !border-white text-white hover:!bg-white/20"
             >
-              Ver el blog
+              Ver plantillas
             </Button>
           </div>
         </div>
@@ -97,11 +101,11 @@ export default async function HomePage() {
         <div className="flex items-center justify-between mb-2">
           <h2 className="text-2xl font-semibold">Destinos destacados</h2>
           <Link href="/planes" className="text-sm text-tatakoa-terracotta font-medium hover:underline">
-            Ver todos los destinos →
+            Ver todos los planes →
           </Link>
         </div>
         <p className="text-tatakoa-charcoal/60 mb-8">
-          Descubre planes, guías y recomendaciones para tu próxima aventura.
+          Los planes de esta semana, ciudad por ciudad.
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -112,11 +116,12 @@ export default async function HomePage() {
               className="group relative aspect-[3/4] rounded-xl overflow-hidden bg-tatakoa-charcoal"
             >
               {city.image && (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
+                <Image
                   src={city.image}
                   alt={city.name}
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110"
+                  fill
+                  sizes="(min-width: 768px) 33vw, 100vw"
+                  className="object-cover transition-transform duration-500 ease-out group-hover:scale-110"
                 />
               )}
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
@@ -210,37 +215,43 @@ export default async function HomePage() {
       <section className="bg-tatakoa-sand/5 py-16">
         <div className="mx-auto max-w-6xl px-4">
           <div className="flex items-center justify-between mb-8">
-            <h2 className="text-2xl font-semibold">Plantillas más populares</h2>
-            <Link href="/tienda" className="text-sm text-tatakoa-terracotta font-medium hover:underline">
-              Ver tienda →
+            <h2 className="text-2xl font-semibold">Plantillas y guías</h2>
+            <Link href="/tienda/plantillas" className="text-sm text-tatakoa-terracotta font-medium hover:underline">
+              Ver todas →
             </Link>
           </div>
 
-          {(!products || products.length === 0) && (
-            <p className="text-tatakoa-charcoal/50">Próximamente, nuevas plantillas.</p>
+          {products && products.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {products.map((product: Product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
+          ) : (
+            <div className="max-w-xl">
+              <SubscribeForm
+                source="inicio-plantillas"
+                title="Muy pronto: nuestras primeras plantillas"
+                text="Déjanos tu email y te avisamos el día que salgan."
+                buttonLabel="Avísame"
+                successText="¡Listo! Te avisamos el día del lanzamiento."
+              />
+            </div>
           )}
+        </div>
+      </section>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {products?.map((product: Product) => (
-              <Link
-                key={product.id}
-                href={`/tienda/${product.slug}`}
-                className="group block rounded-2xl border border-black/5 bg-tatakoa-white overflow-hidden hover:shadow-lg transition-shadow"
-              >
-                <div className="aspect-video bg-tatakoa-sand/10 flex items-center justify-center text-tatakoa-sand/40 text-sm">
-                  {product.file_format ?? "Sin imagen"}
-                </div>
-                <div className="p-5">
-                  <h3 className="text-lg font-semibold group-hover:text-tatakoa-terracotta transition-colors">
-                    {product.name}
-                  </h3>
-                  <p className="text-tatakoa-terracotta font-semibold mt-2">
-                    {formatPrice(product.price_cents, product.currency)}
-                  </p>
-                </div>
-              </Link>
-            ))}
-          </div>
+      {/* Lista de emails */}
+      <section className="mx-auto max-w-6xl px-4 py-16">
+        <div className="rounded-3xl bg-tatakoa-charcoal p-8 md:p-12">
+          <SubscribeForm
+            source="inicio"
+            tone="dark"
+            title="Los planes de la semana, en tu correo"
+            text="Cada semana, los mejores planes de DC, New York y Miami antes del fin de semana. Sin spam."
+            buttonLabel="Quiero los planes"
+            successText="¡Listo! Te escribimos antes del fin de semana."
+          />
         </div>
       </section>
     </div>

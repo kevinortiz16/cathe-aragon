@@ -1,3 +1,4 @@
+import { CONTACT_EMAIL, LEGAL_OWNER } from "@/lib/site";
 import Link from "next/link";
 
 export const metadata = {
@@ -6,7 +7,7 @@ export const metadata = {
 
 const DSAR_URL =
   "https://app.termly.io/dsar/7e117529-c37d-4a8d-976f-059517b7042a";
-const CONTACT_EMAIL = "infocathearagon@gmail.com";
+
 
 const toc = [
   { href: "#infocollect", label: "1. Qué información recolectamos" },
@@ -36,7 +37,7 @@ export default function PrivacidadPage() {
 
       <div className="prose max-w-none prose-headings:font-semibold prose-a:text-tatakoa-terracotta text-tatakoa-charcoal/80 space-y-6">
         <p>
-          Este Aviso de Privacidad de <strong>Catherine Aragon Sierra</strong>{" "}
+          Este Aviso de Privacidad de <strong>{LEGAL_OWNER}</strong>{" "}
           (&quot;nosotros&quot;) describe cómo y por qué podemos acceder,
           recolectar, almacenar, usar y/o compartir (&quot;procesar&quot;) tu
           información personal cuando usas nuestros servicios
@@ -664,7 +665,7 @@ export default function PrivacidadPage() {
           correo postal a:
         </p>
         <p>
-          Catherine Aragon Sierra
+          {LEGAL_OWNER}
           <br />
           2425 Blueridge Ave
           <br />
@@ -688,7 +689,7 @@ export default function PrivacidadPage() {
       </div>
 
       <p className="text-xs text-tatakoa-charcoal/40 mt-12 pt-6 border-t border-black/10">
-        © 2026 Catherine Aragon Sierra. Todos los derechos reservados.
+        © 2026 {LEGAL_OWNER}. Todos los derechos reservados.
       </p>
     </div>
   );

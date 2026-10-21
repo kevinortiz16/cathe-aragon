@@ -9,12 +9,40 @@ import { PlanesDropdown } from "./planes-dropdown";
 import { AccountDropdown } from "./account-dropdown";
 import type { User } from "@supabase/supabase-js";
 import { TiendaDropdown } from "./tienda-dropdown";
+import { CITY_LABELS, CITY_SLUGS } from "@/lib/cities";
 
 const links = [
   { href: "/", label: "Inicio" },
   { href: "/planes", label: "Planes" },
   { href: "/blog", label: "Blog" },
   { href: "/sobre-tatakoa", label: "Sobre TATAKOA" },
+];
+
+// Menú del celular: todo lo que hay en el menú de escritorio, por secciones.
+const mobileSections = [
+  {
+    title: "Planes",
+    links: [
+      { href: "/planes", label: "Todos los planes de la semana" },
+      ...CITY_SLUGS.map((slug) => ({ href: `/planes/${slug}`, label: CITY_LABELS[slug] })),
+    ],
+  },
+  {
+    title: "Tienda",
+    links: [
+      { href: "/tienda/plantillas", label: "Plantillas y guías" },
+      { href: "/tienda/productos", label: "Productos" },
+    ],
+  },
+  {
+    title: "TATAKOA",
+    links: [
+      { href: "/", label: "Inicio" },
+      { href: "/blog", label: "Blog" },
+      { href: "/sobre-tatakoa", label: "Sobre TATAKOA" },
+      { href: "/contacto", label: "Contacto" },
+    ],
+  },
 ];
 
 export function Navbar() {
@@ -37,6 +65,7 @@ export function Navbar() {
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
+    router.refresh();
   };
 
   const handleSearch = (e: React.FormEvent) => {
@@ -134,7 +163,8 @@ export function Navbar() {
         <button
           className="md:hidden text-white"
           onClick={() => setOpen(!open)}
-          aria-label="Abrir menú"
+          aria-label={open ? "Cerrar menú" : "Abrir menú"}
+          aria-expanded={open}
         >
           <span className="block w-6 h-0.5 bg-white mb-1.5" />
           <span className="block w-6 h-0.5 bg-white mb-1.5" />
@@ -143,41 +173,64 @@ export function Navbar() {
       </nav>
 
       {open && (
-        <div className="md:hidden px-4 pb-6">
+        <div className="md:hidden px-4 pb-6 max-h-[calc(100vh-4rem)] overflow-y-auto">
           <form onSubmit={handleSearch} className="mb-4">
+            <label htmlFor="mobile-search" className="sr-only">Buscar en el blog</label>
             <input
-              type="text"
+              id="mobile-search"
+              type="search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Buscar..."
+              placeholder="Buscar en el blog..."
               className="w-full rounded-full bg-white/15 text-white placeholder-white/60 text-sm px-4 py-2 focus:outline-none"
             />
           </form>
           <ul className="flex flex-col gap-1 text-sm">
-            {links.map((link) => (
-              <li key={link.href}>
-                <Link
-                  href={link.href}
-                  onClick={() => setOpen(false)}
-                  className="block text-white/90 hover:bg-black/15 rounded-full px-4 py-2 transition-colors"
-                >
-                  {link.label}
-                </Link>
+            {mobileSections.map((section) => (
+              <li key={section.title}>
+                <p className="px-4 pt-3 pb-1 text-[11px] font-semibold uppercase tracking-widest text-tatakoa-sand">
+                  {section.title}
+                </p>
+                <ul>
+                  {section.links.map((link) => (
+                    <li key={link.href}>
+                      <Link
+                        href={link.href}
+                        onClick={() => setOpen(false)}
+                        className="block text-white/90 hover:bg-white/10 rounded-full px-4 py-2.5 transition-colors"
+                      >
+                        {link.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
               </li>
             ))}
-            <li>
+            <li className="border-t border-white/10 mt-3 pt-3">
               {user ? (
-                <button
-                  onClick={handleLogout}
-                  className="block w-full text-left text-white/90 hover:bg-black/15 rounded-full px-4 py-2 transition-colors"
-                >
-                  Cerrar sesión
-                </button>
+                <>
+                  <Link
+                    href="/cuenta/compras"
+                    onClick={() => setOpen(false)}
+                    className="block text-white/90 hover:bg-white/10 rounded-full px-4 py-2.5 transition-colors"
+                  >
+                    Mis compras
+                  </Link>
+                  <button
+                    onClick={() => {
+                      setOpen(false);
+                      handleLogout();
+                    }}
+                    className="block w-full text-left text-white/60 hover:bg-white/10 rounded-full px-4 py-2.5 transition-colors"
+                  >
+                    Cerrar sesión
+                  </button>
+                </>
               ) : (
                 <Link
                   href="/login"
                   onClick={() => setOpen(false)}
-                  className="block text-white/90 hover:bg-black/15 rounded-full px-4 py-2 transition-colors"
+                  className="block text-white/90 hover:bg-white/10 rounded-full px-4 py-2.5 transition-colors"
                 >
                   Iniciar sesión
                 </Link>

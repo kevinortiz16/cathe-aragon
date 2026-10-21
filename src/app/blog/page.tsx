@@ -21,8 +21,10 @@ export default async function BlogPage({ searchParams }: PageProps) {
     .eq("published", true)
     .order("created_at", { ascending: false });
 
-  if (q) {
-    query = query.or(`title.ilike.%${q}%,excerpt.ilike.%${q}%`);
+  // Quitamos caracteres con significado en el filtro de PostgREST (, ( ) % * \ ")
+  const term = (q ?? "").replace(/[,()%*\\"]/g, " ").trim().slice(0, 80);
+  if (term) {
+    query = query.or(`title.ilike.%${term}%,excerpt.ilike.%${term}%`);
   }
 
   const { data: posts, error } = await query;

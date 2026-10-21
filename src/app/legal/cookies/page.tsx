@@ -1,8 +1,9 @@
+import { CONTACT_EMAIL } from "@/lib/site";
 export const metadata = {
   title: "Política de Cookies | TATAKOA",
 };
 
-const CONTACT_EMAIL = "infocathearagon@gmail.com";
+
 
 export default function CookiesPage() {
   return (

@@ -3,7 +3,7 @@ import { Topbar } from "@/components/layout/topbar";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { GoogleAnalytics } from "@/components/analytics/google-analytics";
-import { AdSense } from "@/components/analytics/adsense";
+import { SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 import localFont from "next/font/local";
@@ -20,9 +20,16 @@ const montserrat = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "TATAKOA | Viajes, tips y recomendaciones",
+  metadataBase: new URL(SITE_URL),
+  title: "TATAKOA | Planes, guías y plantillas de viaje",
   description:
-    "Blog y tienda de TATAKOA: guías de viaje, vida nómada, RV, camping y colaboraciones con marcas.",
+    "Planes de la semana en DC, New York y Miami, guías de viaje y plantillas para organizar tus viajes por USA.",
+  openGraph: {
+    type: "website",
+    siteName: "TATAKOA",
+    locale: "es_US",
+    images: [{ url: "/tatakoa-hero.png", alt: "TATAKOA — Where Every Journey Begins" }],
+  },
   other: {
     "google-adsense-account": "ca-pub-3914373007497165",
   },
@@ -41,7 +48,6 @@ export default function RootLayout({
         <main className="flex-1">{children}</main>
         <Footer />
         <GoogleAnalytics />
-        <AdSense />
       </body>
     </html>
   );

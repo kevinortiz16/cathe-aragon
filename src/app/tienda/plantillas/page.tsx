@@ -1,10 +1,11 @@
 import { createClient } from "@/lib/supabase/server";
 import { ProductCard } from "@/components/tienda/product-card";
 import type { Product } from "@/types/product";
+import { SubscribeForm } from "@/components/forms/subscribe-form";
 
 export const metadata = {
   title: "Plantillas y Guías | Tienda TATAKOA",
-  description: "Plantillas descargables para viajeros, nómadas digitales y RV lovers.",
+  description: "Plantillas y guías descargables para planear tus salidas y viajes: planes por ciudad, escapadas, checklists y planificadores.",
 };
 
 export default async function PlantillasPage() {
@@ -25,7 +26,15 @@ export default async function PlantillasPage() {
       </p>
 
       {(!products || products.length === 0) && (
-        <p className="text-tatakoa-charcoal/50">Aún no hay plantillas disponibles.</p>
+        <div className="max-w-xl rounded-3xl bg-tatakoa-sand/10 p-6 md:p-8">
+          <SubscribeForm
+            source="waitlist-plantillas"
+            title="Las primeras plantillas salen muy pronto"
+            text="Déjanos tu email y te avisamos el día que estén disponibles."
+            buttonLabel="Avísame"
+            successText="¡Listo! Te avisamos el día del lanzamiento."
+          />
+        </div>
       )}
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

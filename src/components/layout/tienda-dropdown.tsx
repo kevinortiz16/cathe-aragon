@@ -17,7 +17,14 @@ export function TiendaDropdown({ navLinkClass }: { navLinkClass: string }) {
 
   return (
     <div className="relative" onMouseEnter={handleEnter} onMouseLeave={handleLeave}>
-      <button className={`${navLinkClass} inline-flex items-center gap-1 appearance-none bg-transparent border-0`}>
+      <button
+        type="button"
+        aria-haspopup="true"
+        aria-expanded={open}
+        onClick={() => setOpen((v) => !v)}
+        onKeyDown={(e) => e.key === "Escape" && setOpen(false)}
+        className={`${navLinkClass} inline-flex items-center gap-1 appearance-none bg-transparent border-0`}
+      >
         Tienda
         <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
           <polyline points="6 9 12 15 18 9" />

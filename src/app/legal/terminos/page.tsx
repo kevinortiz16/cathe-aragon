@@ -1,21 +1,22 @@
+import { CONTACT_EMAIL, LEGAL_OWNER } from "@/lib/site";
 export const metadata = {
   title: "Términos y Condiciones | TATAKOA",
 };
 
-const CONTACT_EMAIL = "infocathearagon@gmail.com";
+
 
 export default function TerminosPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-16">
       <h1 className="text-3xl font-semibold mb-2">Términos y Condiciones</h1>
       <p className="text-sm text-tatakoa-charcoal/50 mb-10">
-        Última actualización: 13 de agosto de 2026
+        Última actualización: 21 de octubre de 2026
       </p>
 
       <div className="prose max-w-none prose-headings:font-semibold prose-a:text-tatakoa-terracotta text-tatakoa-charcoal/80 space-y-6">
         <h2>Acuerdo con nuestros términos legales</h2>
         <p>
-          Somos <strong>Catherine Aragon Sierra</strong> (&quot;la
+          Somos <strong>{LEGAL_OWNER}</strong> (&quot;la
           Empresa&quot;, &quot;nosotros&quot;). Operamos el sitio web{" "}
           <strong>tatakoa.co</strong>, así como cualquier otro producto
           o servicio relacionado que haga referencia a estos Términos
@@ -29,7 +30,7 @@ export default function TerminosPage() {
         </p>
         <p>
           Estos Términos Legales constituyen un acuerdo legalmente
-          vinculante entre tú y Catherine Aragon Sierra, relacionado con tu
+          vinculante entre tú y {LEGAL_OWNER}, relacionado con tu
           acceso y uso de los Servicios. Al acceder a los Servicios,
           declaras que has leído, entendido y aceptado estar sujeto a
           todos estos Términos Legales. SI NO ESTÁS DE ACUERDO CON ELLOS,
@@ -71,7 +72,10 @@ export default function TerminosPage() {
           <li>16. Datos del usuario</li>
           <li>17. Comunicaciones y firmas electrónicas</li>
           <li>18. Disposiciones varias</li>
-          <li>19. Contáctanos</li>
+          <li>
+            <a href="#reembolsos">19. Compras, licencia y reembolsos de productos digitales</a>
+          </li>
+          <li>20. Contáctanos</li>
         </ul>
 
         <h2>1. Nuestros Servicios</h2>
@@ -235,7 +239,7 @@ export default function TerminosPage() {
         <p>
           Estos Términos Legales se regirán e interpretarán según las
           leyes de los Estados Unidos y del estado de Maryland.
-          Catherine Aragon Sierra y tú acuerdan irrevocablemente que los
+          {LEGAL_OWNER} y tú acuerdan irrevocablemente que los
           tribunales de Maryland tendrán jurisdicción exclusiva para
           resolver cualquier disputa que surja en relación con estos
           Términos Legales.
@@ -371,13 +375,40 @@ export default function TerminosPage() {
           Servicios.
         </p>
 
-        <h2>19. Contáctanos</h2>
+        {/* BORRADOR — revisar con un abogado antes de publicar. */}
+        <h2 id="reembolsos">19. Compras, licencia y reembolsos de productos digitales</h2>
+        <p>
+          Las plantillas y guías digitales se venden en dólares
+          estadounidenses (USD) y se pagan a través de Stripe. No
+          almacenamos los datos de tu tarjeta. Tras confirmar el pago,
+          el archivo queda disponible de inmediato en la página de
+          confirmación y en &quot;Mis compras&quot;.
+        </p>
+        <p>
+          <strong>Licencia de uso.</strong> Cada compra te da una
+          licencia personal y no exclusiva para usar el archivo. No
+          puedes revenderlo, compartirlo públicamente, redistribuirlo
+          ni presentarlo como propio.
+        </p>
+        <p>
+          <strong>Reembolsos.</strong> Como los productos digitales se
+          entregan al instante, las ventas son finales. Haremos un
+          reembolso o te enviaremos el archivo correcto si: (a) el
+          archivo está dañado o no se puede abrir, (b) recibiste un
+          producto distinto al que compraste, o (c) se te cobró dos
+          veces por el mismo producto. Escríbenos a{" "}
+          <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> dentro
+          de los 14 días siguientes a la compra, con el email usado y
+          una descripción del problema.
+        </p>
+
+        <h2>20. Contáctanos</h2>
         <p>
           Para resolver una queja sobre los Servicios o recibir más
           información sobre su uso, contáctanos en:
         </p>
         <p>
-          Catherine Aragon Sierra
+          {LEGAL_OWNER}
           <br />
           2425 Blueridge Ave
           <br />
