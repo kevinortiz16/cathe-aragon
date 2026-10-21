@@ -36,7 +36,6 @@ export function Footer() {
           <ul className="space-y-2 text-sm text-tatakoa-white/70 pl-[34px]">
             <li><Link href="/blog">Blog</Link></li>
             <li><Link href="/tienda">Tienda</Link></li>
-            <li><Link href="/portafolio">Portafolio</Link></li>
           </ul>
         </div>
 

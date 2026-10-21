@@ -1,12 +1,13 @@
 // src/components/plans/plan-card.tsx
 import Link from "next/link";
-import { getCityLabel } from "@/lib/cities";
+import { getCityLabel, normalizeCitySlug } from "@/lib/cities";
 import type { Plan } from "@/types/plan";
 
 export function PlanCard({ plan, showCity = true }: { plan: Plan; showCity?: boolean }) {
+  const city = normalizeCitySlug(plan.city);
   return (
     <Link
-      href={`/planes/${plan.city}/${plan.slug}`}
+      href={`/planes/${city}/${plan.slug}`}
       className="group block rounded-2xl bg-white border border-black/5 shadow-sm overflow-hidden hover:shadow-lg transition-shadow"
     >
       <div className="aspect-video bg-tatakoa-sand/10 flex items-center justify-center text-tatakoa-sand/40 text-sm relative">
@@ -15,10 +16,11 @@ export function PlanCard({ plan, showCity = true }: { plan: Plan; showCity?: boo
           <img
             src={plan.cover_image}
             alt={plan.title}
+            loading="lazy"
             className="w-full h-full object-cover"
           />
         ) : (
-          "Sin imagen"
+          "TATAKOA"
         )}
         {plan.featured && (
           <span className="absolute top-3 left-3 bg-tatakoa-terracotta text-white text-[10px] font-semibold uppercase tracking-wide px-2.5 py-1 rounded-full">
@@ -29,7 +31,7 @@ export function PlanCard({ plan, showCity = true }: { plan: Plan; showCity?: boo
       <div className="p-5">
         {showCity && (
           <span className="text-xs font-medium text-tatakoa-terracotta uppercase tracking-wide">
-            {getCityLabel(plan.city)}
+            {getCityLabel(city)}
           </span>
         )}
         <h3 className="text-lg font-semibold mt-2 group-hover:text-tatakoa-terracotta transition-colors">
