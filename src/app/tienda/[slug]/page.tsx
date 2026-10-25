@@ -8,6 +8,7 @@ import { DownloadButton } from "@/components/tienda/download-button";
 import { FreeDownloadForm } from "@/components/tienda/free-download-form";
 import type { Product } from "@/types/product";
 import type { Metadata } from "next";
+import { RemoteImage } from "@/components/ui/remote-image";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -87,10 +88,15 @@ export default async function ProductPage({ params, searchParams }: PageProps) {
         </p>
       )}
 
-      <div className="aspect-video bg-tatakoa-sand/10 rounded-2xl flex items-center justify-center text-tatakoa-sand/60 my-6 overflow-hidden">
+      <div className="relative aspect-video bg-tatakoa-sand/10 rounded-2xl flex items-center justify-center text-tatakoa-sand/60 my-6 overflow-hidden">
         {product.cover_image ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={product.cover_image} alt={product.name} className="w-full h-full object-cover" />
+          <RemoteImage
+            src={product.cover_image}
+            alt={product.name}
+            sizes="(min-width: 768px) 736px, 100vw"
+            className="object-cover"
+            preload
+          />
         ) : (
           product.file_format ?? "TATAKOA"
         )}
@@ -141,8 +147,14 @@ export default async function ProductPage({ params, searchParams }: PageProps) {
       {previews.length > 0 && (
         <div className="grid grid-cols-2 gap-3 mt-8">
           {previews.map((src) => (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img key={src} src={src} alt={`Vista previa de ${product.name}`} className="w-full rounded-xl border border-black/5" loading="lazy" />
+            <RemoteImage
+              key={src}
+              src={src}
+              alt={`Vista previa de ${product.name}`}
+              fill={false}
+              sizes="(min-width: 768px) 360px, 50vw"
+              className="w-full h-auto rounded-xl border border-black/5"
+            />
           ))}
         </div>
       )}

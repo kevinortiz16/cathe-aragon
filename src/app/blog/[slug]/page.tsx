@@ -1,7 +1,9 @@
+import Image from "next/image";
 import { createClient } from "@/lib/supabase/server";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { Markdown } from "@/components/ui/markdown";
+import { RemoteImage } from "@/components/ui/remote-image";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -58,10 +60,11 @@ export default async function PostPage({ params }: PageProps) {
 
       <div className="flex items-center gap-3 mb-8">
         <div className="w-9 h-9 rounded-full overflow-hidden shrink-0 bg-tatakoa-sand/10">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          <Image
             src="/kevin_blog.png"
             alt="Kevin Ortiz"
+            width={36}
+            height={36}
             className="w-full h-full object-cover"
           />
         </div>
@@ -79,12 +82,14 @@ export default async function PostPage({ params }: PageProps) {
 
       {post.cover_image && (
         <div className="mb-8">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          <RemoteImage
             src={post.cover_image}
             alt={post.title}
-            className="w-full rounded-2xl"
-      />
+            fill={false}
+            sizes="(min-width: 768px) 736px, 100vw"
+            className="w-full h-auto rounded-2xl"
+            preload
+          />
           <p className="text-xs text-tatakoa-charcoal/40 italic mt-2 text-right">
             Fotografía: Ureflect
           </p>

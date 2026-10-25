@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { Post } from "@/types/post";
+import { RemoteImage } from "@/components/ui/remote-image";
 
 export const metadata = {
   title: "Blog | TATAKOA",
@@ -55,13 +56,13 @@ export default async function BlogPage({ searchParams }: PageProps) {
             href={`/blog/${post.slug}`}
             className="group block rounded-2xl border border-black/5 overflow-hidden hover:shadow-lg transition-shadow"
           >
-            <div className="aspect-video bg-tatakoa-sand/10 flex items-center justify-center text-tatakoa-sand/40 text-sm">
+            <div className="relative aspect-video bg-tatakoa-sand/10 flex items-center justify-center text-tatakoa-sand/40 text-sm">
               {post.cover_image ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
+                <RemoteImage
                   src={post.cover_image}
                   alt={post.title}
-                  className="w-full h-full object-cover"
+                  sizes="(min-width: 768px) 33vw, (min-width: 640px) 50vw, 100vw"
+                  className="object-cover"
                 />
               ) : (
                 "Sin imagen"

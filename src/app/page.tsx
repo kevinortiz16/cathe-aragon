@@ -7,6 +7,7 @@ import { SubscribeForm } from "@/components/forms/subscribe-form";
 import { SUB_BRANDS } from "@/lib/sub-brands";
 import type { Post } from "@/types/post";
 import type { Product } from "@/types/product";
+import { RemoteImage } from "@/components/ui/remote-image";
 
 // Ciudades destacadas (las mismas de /planes, ver src/lib/cities.ts)
 const FEATURED_CITIES = [
@@ -186,13 +187,13 @@ export default async function HomePage() {
               href={`/blog/${post.slug}`}
               className="group block rounded-2xl bg-white border border-black/5 shadow-sm overflow-hidden hover:shadow-lg transition-shadow"
             >
-              <div className="aspect-video bg-tatakoa-sand/10 flex items-center justify-center text-tatakoa-sand/40 text-sm">
+              <div className="relative aspect-video bg-tatakoa-sand/10 flex items-center justify-center text-tatakoa-sand/40 text-sm">
                 {post.cover_image ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
+                  <RemoteImage
                     src={post.cover_image}
                     alt={post.title}
-                    className="w-full h-full object-cover"
+                    sizes="(min-width: 768px) 33vw, (min-width: 640px) 50vw, 100vw"
+                    className="object-cover"
                   />
                 ) : (
                   "Sin imagen"

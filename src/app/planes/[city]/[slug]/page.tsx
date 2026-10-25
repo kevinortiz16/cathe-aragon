@@ -9,6 +9,7 @@ import { Markdown } from "@/components/ui/markdown";
 import { PlanesLeadBox } from "@/components/plans/planes-lead-box";
 import type { Plan } from "@/types/plan";
 import type { Metadata } from "next";
+import { RemoteImage } from "@/components/ui/remote-image";
 
 interface PageProps {
   params: Promise<{ city: string; slug: string }>;
@@ -81,10 +82,15 @@ export default async function PlanDetailPage({ params }: PageProps) {
         </div>
       )}
 
-      <div className="aspect-video bg-tatakoa-sand/10 rounded-2xl overflow-hidden my-6 flex items-center justify-center text-tatakoa-sand/40">
+      <div className="relative aspect-video bg-tatakoa-sand/10 rounded-2xl overflow-hidden my-6 flex items-center justify-center text-tatakoa-sand/40">
         {plan.cover_image ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={plan.cover_image} alt={plan.title} className="w-full h-full object-cover" />
+          <RemoteImage
+            src={plan.cover_image}
+            alt={plan.title}
+            sizes="(min-width: 896px) 864px, 100vw"
+            className="object-cover"
+            preload
+          />
         ) : (
           "TATAKOA"
         )}

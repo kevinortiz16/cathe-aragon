@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { formatPrice } from "@/lib/format";
 import type { Product } from "@/types/product";
+import { RemoteImage } from "@/components/ui/remote-image";
 
 export function ProductCard({ product }: { product: Product }) {
   return (
@@ -8,13 +9,13 @@ export function ProductCard({ product }: { product: Product }) {
       href={`/tienda/${product.slug}`}
       className="group block rounded-2xl border border-black/5 overflow-hidden hover:shadow-lg transition-shadow"
     >
-      <div className="aspect-video bg-tatakoa-sand/10 flex items-center justify-center text-tatakoa-sand/40 text-sm">
+      <div className="relative aspect-video bg-tatakoa-sand/10 flex items-center justify-center text-tatakoa-sand/40 text-sm">
         {product.cover_image ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
+          <RemoteImage
             src={product.cover_image}
             alt={product.name}
-            className="w-full h-full object-cover"
+            sizes="(min-width: 768px) 33vw, (min-width: 640px) 50vw, 100vw"
+            className="object-cover"
           />
         ) : (
           product.file_format ?? "Sin imagen"
