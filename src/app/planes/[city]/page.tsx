@@ -2,6 +2,7 @@ import { notFound, permanentRedirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { PlanCard } from "@/components/plans/plan-card";
 import { PlanesLeadBox } from "@/components/plans/planes-lead-box";
+import { SUBSCRIBE_ENABLED } from "@/lib/flags";
 import { getCityLabel, isKnownCity, normalizeCitySlug } from "@/lib/cities";
 import { todayInSiteZone } from "@/lib/dates";
 import type { Plan } from "@/types/plan";
@@ -59,9 +60,11 @@ export default async function CityPlansPage({ params }: PageProps) {
         ))}
       </div>
 
-      <div className="mt-12">
-        <PlanesLeadBox source={`planes-${slug}`} />
-      </div>
+      {SUBSCRIBE_ENABLED && (
+        <div className="mt-12">
+          <PlanesLeadBox source={`planes-${slug}`} />
+        </div>
+      )}
     </div>
   );
 }

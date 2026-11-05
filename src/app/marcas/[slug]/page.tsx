@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { SUB_BRANDS } from "@/lib/sub-brands";
 import type { Metadata } from "next";
 import { SubscribeForm } from "@/components/forms/subscribe-form";
+import { SUBSCRIBE_ENABLED } from "@/lib/flags";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -47,6 +48,7 @@ export default async function SubBrandPage({ params }: PageProps) {
         <p className="text-tatakoa-charcoal/70 leading-relaxed">
           {brand.description}
         </p>
+        {SUBSCRIBE_ENABLED && (
         <div className="mt-10 text-left rounded-3xl bg-tatakoa-sand/10 p-6 md:p-8">
           <SubscribeForm
             source={`waitlist-${brand.slug}`}
@@ -56,6 +58,7 @@ export default async function SubBrandPage({ params }: PageProps) {
             successText="¡Estás en la lista! Te avisamos primero."
           />
         </div>
+        )}
       </section>
     </div>
   );

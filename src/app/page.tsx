@@ -4,6 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/tienda/product-card";
 import { SubscribeForm } from "@/components/forms/subscribe-form";
+import { SUBSCRIBE_ENABLED } from "@/lib/flags";
 import { SUB_BRANDS } from "@/lib/sub-brands";
 import type { Post } from "@/types/post";
 import type { Product } from "@/types/product";
@@ -212,7 +213,8 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Tienda destacada */}
+      {/* Tienda destacada (sin productos y sin suscripción solo quedaría el título) */}
+      {(SUBSCRIBE_ENABLED || (products && products.length > 0)) && (
       <section className="bg-tatakoa-sand/5 py-16">
         <div className="mx-auto max-w-6xl px-4">
           <div className="flex items-center justify-between mb-8">
@@ -241,8 +243,10 @@ export default async function HomePage() {
           )}
         </div>
       </section>
+      )}
 
       {/* Lista de emails */}
+      {SUBSCRIBE_ENABLED && (
       <section className="mx-auto max-w-6xl px-4 py-16">
         <div className="rounded-3xl bg-tatakoa-charcoal p-8 md:p-12">
           <SubscribeForm
@@ -255,6 +259,7 @@ export default async function HomePage() {
           />
         </div>
       </section>
+      )}
     </div>
   );
 }

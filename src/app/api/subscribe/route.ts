@@ -1,8 +1,16 @@
 import { NextResponse } from "next/server";
+import { SUBSCRIBE_ENABLED } from "@/lib/flags";
 import { normalizeEmail } from "@/lib/validation/email";
 import { saveSubscriber } from "@/lib/subscribers";
 
 export async function POST(request: Request) {
+  if (!SUBSCRIBE_ENABLED) {
+    return NextResponse.json(
+      { error: "Las suscripciones no están disponibles por ahora." },
+      { status: 503 },
+    );
+  }
+
   const body = await request.json().catch(() => ({}));
 
   // Campo trampa: los bots lo llenan, las personas no lo ven.

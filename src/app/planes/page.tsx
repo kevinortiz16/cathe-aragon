@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { PlanCard } from "@/components/plans/plan-card";
 import { PlanesLeadBox } from "@/components/plans/planes-lead-box";
+import { SUBSCRIBE_ENABLED } from "@/lib/flags";
 import { todayInSiteZone } from "@/lib/dates";
 import type { Plan } from "@/types/plan";
 
@@ -41,9 +42,11 @@ export default async function PlanesPage() {
         ))}
       </div>
 
-      <div className="my-12">
-        <PlanesLeadBox source="planes" />
-      </div>
+      {SUBSCRIBE_ENABLED && (
+        <div className="my-12">
+          <PlanesLeadBox source="planes" />
+        </div>
+      )}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
         {plans?.slice(6).map((plan: Plan) => (

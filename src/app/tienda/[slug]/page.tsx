@@ -6,6 +6,7 @@ import { formatPrice } from "@/lib/format";
 import { BuyButton } from "@/components/tienda/buy-button";
 import { DownloadButton } from "@/components/tienda/download-button";
 import { FreeDownloadForm } from "@/components/tienda/free-download-form";
+import { SUBSCRIBE_ENABLED } from "@/lib/flags";
 import type { Product } from "@/types/product";
 import type { Metadata } from "next";
 import { RemoteImage } from "@/components/ui/remote-image";
@@ -120,9 +121,13 @@ export default async function ProductPage({ params, searchParams }: PageProps) {
         {isPhysical ? (
           <p className="text-sm text-tatakoa-charcoal/60">Próximamente.</p>
         ) : isFree ? (
-          <div className="sm:max-w-sm w-full">
-            <FreeDownloadForm productId={product.id} productName={product.name} />
-          </div>
+          SUBSCRIBE_ENABLED ? (
+            <div className="sm:max-w-sm w-full">
+              <FreeDownloadForm productId={product.id} productName={product.name} />
+            </div>
+          ) : (
+            <p className="text-sm text-tatakoa-charcoal/60">Próximamente.</p>
+          )
         ) : owned ? (
           <div className="flex flex-col items-start sm:items-end gap-1">
             <p className="text-xs text-tatakoa-charcoal/60">Ya compraste esta plantilla.</p>
