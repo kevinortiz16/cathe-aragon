@@ -104,7 +104,7 @@ export default async function PlanDetailPage({ params }: PageProps) {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
         <div className="md:col-span-2">
           <div className="prose max-w-none prose-headings:font-semibold prose-a:text-tatakoa-terracotta">
-            <Markdown>{plan.content}</Markdown>
+            <Markdown imageSizes="(min-width: 896px) 563px, (min-width: 768px) 62vw, 100vw">{plan.content}</Markdown>
           </div>
 
           {eventUrl && (

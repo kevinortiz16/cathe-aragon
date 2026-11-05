@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import ReactMarkdown from "react-markdown";
+import { Markdown } from "@/components/ui/markdown";
 import { createClient } from "@/lib/supabase/server";
 import { formatPrice } from "@/lib/format";
 import { BuyButton } from "@/components/tienda/buy-button";
@@ -140,7 +140,7 @@ export default async function ProductPage({ params, searchParams }: PageProps) {
 
       {product.long_description && (
         <div className="prose max-w-none mt-8 prose-headings:font-semibold prose-a:text-tatakoa-terracotta">
-          <ReactMarkdown>{product.long_description}</ReactMarkdown>
+          <Markdown>{product.long_description}</Markdown>
         </div>
       )}
 

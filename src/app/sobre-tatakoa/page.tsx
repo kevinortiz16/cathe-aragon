@@ -64,10 +64,10 @@ export default function SobreTatakoaPage() {
       <section className="relative h-[420px] md:h-[520px] flex items-end overflow-hidden">
         <div className="absolute inset-0">
           <Image
-            src="/sobre-tatakoa/hero.png"
+            src="/sobre-tatakoa/hero.webp"
             alt=""
             fill
-            priority
+            preload
             sizes="100vw"
             className="object-cover"
           />
@@ -103,9 +103,11 @@ export default function SobreTatakoaPage() {
         </div>
         <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-tatakoa-sand/10">
           <Image
-            src="/sobre-tatakoa/punto-de-partida.png"
+            src="/sobre-tatakoa/punto-de-partida.webp"
             alt=""
             fill
+            // Columna de max-w-6xl (1152 - 32 de padding - 48 de gap) / 2 = 536 px
+            sizes="(min-width: 1152px) 536px, (min-width: 768px) 50vw, 100vw"
             className="object-cover"
           />
         </div>
@@ -180,6 +182,10 @@ export default function SobreTatakoaPage() {
                   alt={line.name}
                   width={line.logoWidth}
                   height={line.logoHeightPx}
+                  // Se muestra a 56 px de alto (80 px en md+). Sin `sizes`, Next
+                  // tomaría el `width` real (3000–8000 px) y serviría la copia
+                  // de 1920 px para un logo de ~600 px.
+                  sizes={`(min-width: 768px) ${Math.ceil((80 * line.logoWidth) / line.logoHeightPx)}px, ${Math.ceil((56 * line.logoWidth) / line.logoHeightPx)}px`}
                   className="h-14 md:h-20 w-auto"
                 />
               </div>

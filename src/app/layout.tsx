@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     type: "website",
     siteName: "TATAKOA",
     locale: "es_US",
-    images: [{ url: "/tatakoa-hero.png", alt: "TATAKOA — Where Every Journey Begins" }],
+    images: [{ url: "/og.jpg", width: 1200, height: 630, alt: "TATAKOA — Where Every Journey Begins" }],
   },
   other: {
     "google-adsense-account": "ca-pub-3914373007497165",

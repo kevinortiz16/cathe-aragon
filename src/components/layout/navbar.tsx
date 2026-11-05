@@ -89,7 +89,7 @@ export function Navbar() {
             alt="TATAKOA"
             width={160}
             height={21}
-            priority
+            preload
             className="h-6 w-auto"
           />
         </Link>

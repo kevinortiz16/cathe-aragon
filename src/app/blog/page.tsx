@@ -2,6 +2,7 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { Post } from "@/types/post";
 import { RemoteImage } from "@/components/ui/remote-image";
+import { CARD_SIZES } from "@/lib/images";
 
 export const metadata = {
   title: "Blog | TATAKOA",
@@ -61,7 +62,7 @@ export default async function BlogPage({ searchParams }: PageProps) {
                 <RemoteImage
                   src={post.cover_image}
                   alt={post.title}
-                  sizes="(min-width: 768px) 33vw, (min-width: 640px) 50vw, 100vw"
+                  sizes={CARD_SIZES}
                   className="object-cover"
                 />
               ) : (

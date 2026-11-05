@@ -13,14 +13,20 @@ const nextConfig: NextConfig = {
     // Anchos que se generan. Menos variantes = menos trabajo y menos copias
     // en caché; estas cubren celulares (640–828), tablets y escritorio.
     deviceSizes: [640, 828, 1080, 1200, 1920],
-    imageSizes: [256, 384],
+    // 48/96: logos, íconos y avatares chicos (24–36 px) no necesitan 256 px.
+    imageSizes: [48, 96, 256, 384],
     // Calidad 75: buen equilibrio peso/nitidez para fotos (obligatorio en Next 16).
     qualities: [75],
+    // AVIF primero (más liviano) y WebP para navegadores sin AVIF; si no acepta
+    // ninguno, se sirve el formato original. Ojo: cada formato es otra copia en
+    // caché y AVIF tarda más en generarse la primera vez.
+    formats: ["image/avif", "image/webp"],
     // Cuánto tiempo se reutiliza una copia optimizada antes de volver a pedirle
-    // el original a Supabase: 7 días (un plan dura una semana). No hay forma de
-    // invalidar la caché: si reemplazan una foto con el MISMO nombre de archivo,
-    // la vieja puede verse hasta 7 días. Subir con nombre nuevo lo evita.
-    minimumCacheTTL: 604800,
+    // el original a Supabase: 30 días. Las portadas son INMUTABLES: para cambiar
+    // una, se sube con OTRO nombre de archivo. No hay forma de invalidar esta
+    // caché, así que si se reemplaza una foto con el mismo nombre, la vieja
+    // puede seguir viéndose hasta 30 días.
+    minimumCacheTTL: 2592000,
   },
   async redirects() {
     return [

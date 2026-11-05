@@ -8,6 +8,7 @@ import { SUB_BRANDS } from "@/lib/sub-brands";
 import type { Post } from "@/types/post";
 import type { Product } from "@/types/product";
 import { RemoteImage } from "@/components/ui/remote-image";
+import { CARD_SIZES } from "@/lib/images";
 
 // Ciudades destacadas (las mismas de /planes, ver src/lib/cities.ts)
 const FEATURED_CITIES = [
@@ -27,7 +28,7 @@ const FEATURED_CITIES = [
     name: "New York",
     tag: "Qué hacer · Dónde comer · Guías",
     slug: "new-york",
-    image: "/destinos/new-york.png",
+    image: "/destinos/new-york.webp",
   },
 ];
 
@@ -55,10 +56,10 @@ export default async function HomePage() {
       <section className="relative h-[520px] md:h-[640px] flex items-center overflow-hidden">
         <div className="absolute inset-0">
           <Image
-            src="/tatakoa-hero.png"
+            src="/tatakoa-hero.webp"
             alt="TATAKOA — Where Every Journey Begins"
             fill
-            priority
+            preload
             sizes="100vw"
             className="object-cover"
           />
@@ -121,7 +122,7 @@ export default async function HomePage() {
                   src={city.image}
                   alt={city.name}
                   fill
-                  sizes="(min-width: 768px) 33vw, 100vw"
+                  sizes={CARD_SIZES}
                   className="object-cover transition-transform duration-500 ease-out group-hover:scale-110"
                 />
               )}
@@ -192,7 +193,7 @@ export default async function HomePage() {
                   <RemoteImage
                     src={post.cover_image}
                     alt={post.title}
-                    sizes="(min-width: 768px) 33vw, (min-width: 640px) 50vw, 100vw"
+                    sizes={CARD_SIZES}
                     className="object-cover"
                   />
                 ) : (

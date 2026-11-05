@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getCityLabel, normalizeCitySlug } from "@/lib/cities";
 import type { Plan } from "@/types/plan";
 import { RemoteImage } from "@/components/ui/remote-image";
+import { CARD_SIZES_SM2 } from "@/lib/images";
 
 export function PlanCard({ plan, showCity = true }: { plan: Plan; showCity?: boolean }) {
   const city = normalizeCitySlug(plan.city);
@@ -16,7 +17,7 @@ export function PlanCard({ plan, showCity = true }: { plan: Plan; showCity?: boo
           <RemoteImage
             src={plan.cover_image}
             alt={plan.title}
-            sizes="(min-width: 768px) 33vw, (min-width: 640px) 50vw, 100vw"
+            sizes={CARD_SIZES_SM2}
             className="object-cover"
           />
         ) : (

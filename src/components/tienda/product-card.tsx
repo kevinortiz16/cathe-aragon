@@ -2,6 +2,7 @@ import Link from "next/link";
 import { formatPrice } from "@/lib/format";
 import type { Product } from "@/types/product";
 import { RemoteImage } from "@/components/ui/remote-image";
+import { CARD_SIZES } from "@/lib/images";
 
 export function ProductCard({ product }: { product: Product }) {
   return (
@@ -14,7 +15,7 @@ export function ProductCard({ product }: { product: Product }) {
           <RemoteImage
             src={product.cover_image}
             alt={product.name}
-            sizes="(min-width: 768px) 33vw, (min-width: 640px) 50vw, 100vw"
+            sizes={CARD_SIZES}
             className="object-cover"
           />
         ) : (
