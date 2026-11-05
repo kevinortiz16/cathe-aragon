@@ -2,6 +2,7 @@ import { createClient } from "@/lib/supabase/server";
 import { ProductCard } from "@/components/tienda/product-card";
 import type { Product } from "@/types/product";
 import { SubscribeForm } from "@/components/forms/subscribe-form";
+import { SUBSCRIBE_ENABLED } from "@/lib/flags";
 
 export const metadata = {
   title: "Plantillas y Guías | Tienda TATAKOA",
@@ -25,7 +26,7 @@ export default async function PlantillasPage() {
         Descargables digitales para organizar y planear tu próximo viaje.
       </p>
 
-      {(!products || products.length === 0) && (
+      {SUBSCRIBE_ENABLED && (!products || products.length === 0) && (
         <div className="max-w-xl rounded-3xl bg-tatakoa-sand/10 p-6 md:p-8">
           <SubscribeForm
             source="waitlist-plantillas"
