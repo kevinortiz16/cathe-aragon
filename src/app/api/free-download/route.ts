@@ -1,10 +1,18 @@
 import { NextResponse } from "next/server";
+import { SUBSCRIBE_ENABLED } from "@/lib/flags";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { normalizeEmail } from "@/lib/validation/email";
 import { saveSubscriber } from "@/lib/subscribers";
 
 // Descarga de productos gratis (precio 0) a cambio del email.
 export async function POST(request: Request) {
+  if (!SUBSCRIBE_ENABLED) {
+    return NextResponse.json(
+      { error: "Las suscripciones no están disponibles por ahora." },
+      { status: 503 },
+    );
+  }
+
   const body = await request.json().catch(() => ({}));
 
   if (body.website) {

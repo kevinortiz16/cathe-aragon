@@ -7,6 +7,7 @@ import { todayInSiteZone } from "@/lib/dates";
 import { safeExternalUrl } from "@/lib/links";
 import { Markdown } from "@/components/ui/markdown";
 import { PlanesLeadBox } from "@/components/plans/planes-lead-box";
+import { SUBSCRIBE_ENABLED } from "@/lib/flags";
 import type { Plan } from "@/types/plan";
 import type { Metadata } from "next";
 import { RemoteImage } from "@/components/ui/remote-image";
@@ -152,9 +153,11 @@ export default async function PlanDetailPage({ params }: PageProps) {
         )}
       </div>
 
-      <div className="mt-14">
-        <PlanesLeadBox source={`plan-${city}`} />
-      </div>
+      {SUBSCRIBE_ENABLED && (
+        <div className="mt-14">
+          <PlanesLeadBox source={`plan-${city}`} />
+        </div>
+      )}
     </article>
   );
 }
